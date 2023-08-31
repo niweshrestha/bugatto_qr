@@ -62,6 +62,7 @@ class CodesController extends Controller
                     $code->scanned = 0;
                     $code->save(); // saving code
                 }
+		DB::commit();
             } catch (\Exception $e) {
                 DB::rollback();
                 $this->error = 'Ops! looks like we had some problem';
@@ -86,7 +87,7 @@ class CodesController extends Controller
             $inject1 = "<span class='badge badge-gradient-success'>Correct Sacn: </span><p>The security code you have queried has been scanned <span>1st time</span> and the product is <span>genuine</span>.</p>";
         } else {
             $inject1 = "<span class='badge badge-gradient-danger'>Repeat Sacn: </span><p>The security code has been queried <span>". $code->scanned ."time(s)</span>, 
-            first query <span> Beijing Time:". $information->currentTime ." (UTC+8), IP:". $information->ip ." </span></p>";
+            first query <span> Israel Time:". $information->currentTime ." (UTC+2), IP:". $information->ip ." </span></p>";
         }
 
         if($informations)
@@ -94,7 +95,7 @@ class CodesController extends Controller
             $inject2 = "<h4>Last 5 Scanned: </h4><div class='update-section'>";
             foreach($informations as $info)
             {
-                $inject2 .= "<p>Beijing Time: ". $info->currentTime ." (UTC+8), IP: ". $info->ip ." </span></p>";
+                $inject2 .= "<p>Israel Time: ". $info->currentTime ." (UTC+2), IP: ". $info->ip ." </span></p>";
             }
             $inject2 .= "</div>";
         }

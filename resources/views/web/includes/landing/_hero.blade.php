@@ -66,7 +66,7 @@ background-size: cover; min-height: 100vh; position: relative; background-attach
                 <!-- Demo content-->
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-10 col-xl-7 mx-auto">
+                        <div class="col-lg-10 col-xl-7 mx-auto" style="margin-top: 70px;">
                             @if (!$lottery)
                                 <!-- Contact Section Heading-->
                                 <h3 class="display-4">Anti-Counter<br />Felting Platform</h3>

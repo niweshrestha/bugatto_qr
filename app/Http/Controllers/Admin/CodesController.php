@@ -15,23 +15,21 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CodesController extends Controller
 {
-    public $error; 
+    public $error;
 
-    public function lists() 
+    public function lists()
     {
-        $codes = Code::orderBy('id','desc')->paginate(10)->fragment('codes');
+        $codes = Code::orderBy('id', 'desc')->paginate(10)->fragment('codes');
         return view('dashboard.pages.codes.lists', compact('codes'));
     }
 
-    public function generate(Request $request) 
+    public function generate(Request $request)
     {
-        if ($request->isMethod('get'))
-        {
+        if ($request->isMethod('get')) {
             return view('dashboard.pages.codes.generate');
         }
 
-        if ($request->isMethod('POST')) 
-        {
+        if ($request->isMethod('POST')) {
             $request->validate([
                 'file' => 'required|file|mimes:xlsx,xls,csv,txt'
             ]);
@@ -53,15 +51,13 @@ class CodesController extends Controller
         }
     }
 
-    public function generateEach(Request $request) 
+    public function generateEach(Request $request)
     {
-        if ($request->isMethod('get'))
-        {
+        if ($request->isMethod('get')) {
             return view('dashboard.pages.codes.each_generate');
         }
 
-        if ($request->isMethod('POST')) 
-        {
+        if ($request->isMethod('POST')) {
             // dd($request->all());
             $request->validate([
                 'number' => 'required|integer|min:1|digits_between:1,6'
@@ -73,19 +69,18 @@ class CodesController extends Controller
             $qrCountNo = Code::get()->count(); // current no of qr in table
             $count = $request->number; // user define
             $domain = URL::to('/'); // generate url
-            $url = $domain.'/vp';
+            $url = $domain . '/vp';
 
             try {
                 // multiple qr generate
-                for($i=0;$i<$count;$i++)
-                {
+                for ($i = 0; $i < $count; $i++) {
                     $qrCountNo++;
                     $securityNo = str_pad($qrCountNo, 10, '0', STR_PAD_LEFT); // generate security number
                     $currentTime = time(); // time in sec
-                    $imageName = 'qrcode-'.$currentTime.'-'.$securityNo.'.png'; // full image name
+                    $imageName = 'qrcode-' . $currentTime . '-' . $securityNo . '.png'; // full image name
                     $date = Carbon::now()->format('Y-m-d'); // folder date
-                    $imgPath = 'qrcode-'.$date.'/'.$imageName; // full path
-                    $qrCode = QrCode::format('png')->size(100)->errorCorrection('H')->generate($url.'/'.$securityNo); // Generate QR
+                    $imgPath = 'qrcode-' . $date . '/' . $imageName; // full path
+                    $qrCode = QrCode::format('png')->size(100)->errorCorrection('H')->generate($url . '/' . $securityNo); // Generate QR
                     Storage::disk('public')->put($imgPath, $qrCode); // image save
                     // create code
                     $code = new Code;
@@ -93,18 +88,18 @@ class CodesController extends Controller
                     $code->qr_path = $imgPath;
                     $code->scanned = 0;
                     $code->save(); // saving code
-                    
+
                     DB::commit();
                 }
-		DB::commit();
+                DB::commit();
             } catch (\Exception $e) {
                 DB::rollback();
                 $this->error = 'Ops! looks like we had some problem';
                 // $this->error = $e->getMessage();
                 return redirect()->route('admin.code.generate')->with('error-message', $this->error);
             }
-    
-            return redirect()->route('admin.code.generate')->with('success','Code has been generated successfully.');
+            
+            return redirect()->route('admin.code.lists')->with('success', 'Code has been generated successfully.');
         }
     }
 
@@ -116,41 +111,38 @@ class CodesController extends Controller
         $inject1 = "";
         $inject2 = "";
 
-        if(!$code->scanned)
-        {
+        if (!$code->scanned) {
             $inject1 = "<span class='badge badge-gradient-success'>Correct Scan: </span><p>The security code you have queried has not been scanned yet and the product is <span>genuine</span>.</p>";
         } else {
-            $inject1 = "<span class='badge badge-gradient-danger'>Repeat Sacn: </span><p>The security code has been queried <span>". $code->scanned ."time(s)</span>, 
-            first query <span> Miami Time:". $information->currentTime ." (UTC+8), IP:". $information->ip ." </span></p>";
+            $inject1 = "<span class='badge badge-gradient-danger'>Repeat Sacn: </span><p>The security code has been queried <span>" . $code->scanned . "time(s)</span>, 
+            first query <span> Miami Time:" . $information->currentTime . " (UTC+8), IP:" . $information->ip . " </span></p>";
         }
 
-        if($informations)
-        {
+        if ($informations) {
             $inject2 = "<h4>Last Scans: </h4><div class='update-section'>";
-            foreach($informations as $info)
-            {
-                $inject2 .= "<p>Miami Time: <span>". $info->currentTime ."</span> (UTC+8), IP: <span>". $info->ip ."</span>, Address: <span>". $info->cityName .', '. $info->countryName ."</span></p>";
+            foreach ($informations as $info) {
+                $inject2 .= "<p>Miami Time: <span>" . $info->currentTime . "</span> (UTC+8), IP: <span>" . $info->ip . "</span>, Address: <span>" . $info->cityName . ', ' . $info->countryName . "</span></p>";
             }
             $inject2 .= "</div>";
         }
 
         $html = "";
-        if(!empty($code)){
-           $html = "<div class='informations'>
+        if (!empty($code)) {
+            $html = "<div class='informations'>
                         <div class='top-infos'>
                             <div class='qr-holder'>
-                                <img src='". asset('storage/'.$code->qr_path) ."' alt='qr-code'>
+                                <img src='" . asset('storage/' . $code->qr_path) . "' alt='qr-code'>
                             </div>
                             <div class='info-data'>
-                                <p><span class='badge badge-gradient-primary'>S.No.: ".$code->security_no."</span></p>".
-                                $inject1 .
-                            "</div>
-                        </div>".
-                        $inject2 ."
+                                <p><span class='badge badge-gradient-primary'>S.No.: " . $code->security_no . "</span></p>" .
+                $inject1 .
+                "</div>
+                        </div>" .
+                $inject2 . "
                     </div>";
         }
         $response['html'] = $html;
-  
+
         return response()->json($response);
     }
 }

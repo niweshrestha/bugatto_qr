@@ -171,7 +171,7 @@
 
         <div class="main-section">
             <div class="logo-holder">
-                <img src="{{ asset('web/assets/images/logo.svg') }}" alt="bugatti-logo">
+                <img src="{{ asset('web/assets/images/logo.webp') }}" alt="bugatti-logo">
             </div>
             <div class="icon-holder">
                 <img src="{{ asset('web/assets/images/verified.png') }}" alt="Verified">
@@ -212,37 +212,37 @@
                     <div class="details">
                         <h4>Coorporate Information</h4>
                         <div class="comp-info">
-                            <h4>Bugatti LLC</h4>
+                            <h4>ELITE GROUP YJ LLC</h4>
                         </div>
                         <div class="comp-info">
                             <div class="icon-holder-sm">
                                 <img src="{{ asset('web/assets/images/global.png') }}" alt="Verified">
                             </div>
-                            <p>www.bugattiaccessories.com</p>
+                            <p>www.bugatti-e.com</p>
                         </div>
-                        <div class="comp-info">
+                        {{-- <div class="comp-info">
                             <div class="icon-holder-sm">
                                 <img src="{{ asset('web/assets/images/phone-call.png') }}" alt="Verified">
                             </div>
                             <p>(786) 713-86162</p>
-                        </div>
+                        </div> --}}
                         <div class="comp-info">
                             <div class="icon-holder-sm">
                                 <img src="{{ asset('web/assets/images/email.png') }}" alt="Verified">
                             </div>
-                            <p>support@bugatti.com</p>
+                            <p>info@bugatti-e.com</p>
                         </div>
                         <div class="comp-info">
                             <div class="icon-holder-sm">
                                 <img src="{{ asset('web/assets/images/placeholder.png') }}" alt="Verified">
                             </div>
-                            <p>Street Roseville NH 11523</p>
+                            <p>1301 Shotgun Road Sunrise FL 33326 USA</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="register-btn">
-                    <a href="" class="btn btn-gradient-success me-2">Register for lottery</a>
+                    <a href="{{route('web.landing')}}" class="btn btn-gradient-success me-2">Register for lottery</a>
                 </div>
             </div>
         </div>

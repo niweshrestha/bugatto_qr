@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\CodesImport;
 use App\Models\Code;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
+use Maatwebsite\Excel\Facades\Excel;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CodesController extends Controller
@@ -17,11 +19,41 @@ class CodesController extends Controller
 
     public function lists() 
     {
-        $codes = Code::orderBy('id','desc')->paginate(5);
+        $codes = Code::orderBy('id','desc')->paginate(10)->fragment('codes');
         return view('dashboard.pages.codes.lists', compact('codes'));
     }
 
     public function generate(Request $request) 
+    {
+        if ($request->isMethod('get'))
+        {
+            return view('dashboard.pages.codes.generate');
+        }
+
+        if ($request->isMethod('POST')) 
+        {
+            $request->validate([
+                'file' => 'required|file|mimes:xlsx,xls,csv,txt'
+            ]);
+
+            ini_set('memory_limit', -1);
+            DB::beginTransaction();
+
+            try {
+                set_time_limit(0);
+                Excel::import(new CodesImport, $request->file('file'));
+                DB::commit();
+                return redirect()->route('admin.code.lists')->with('success', 'File imported successfully');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $this->error = 'Ops! looks like we had some problem';
+                // $this->error = $e->getMessage();
+                return redirect()->route('admin.code.generate')->with('error-message', $this->error);
+            }
+        }
+    }
+
+    public function generateBackup(Request $request) 
     {
         if ($request->isMethod('get'))
         {
@@ -41,7 +73,7 @@ class CodesController extends Controller
             $qrCountNo = Code::get()->count(); // current no of qr in table
             $count = $request->number; // user define
             $domain = URL::to('/'); // generate url
-            $url = $domain.'/verify-product';
+            $url = $domain.'/vp';
 
             try {
                 // multiple qr generate
@@ -61,6 +93,8 @@ class CodesController extends Controller
                     $code->qr_path = $imgPath;
                     $code->scanned = 0;
                     $code->save(); // saving code
+                    
+                    DB::commit();
                 }
 		DB::commit();
             } catch (\Exception $e) {
@@ -84,10 +118,10 @@ class CodesController extends Controller
 
         if(!$code->scanned)
         {
-            $inject1 = "<span class='badge badge-gradient-success'>Correct Sacn: </span><p>The security code you have queried has been scanned <span>1st time</span> and the product is <span>genuine</span>.</p>";
+            $inject1 = "<span class='badge badge-gradient-success'>Correct Scan: </span><p>The security code you have queried has not been scanned yet and the product is <span>genuine</span>.</p>";
         } else {
             $inject1 = "<span class='badge badge-gradient-danger'>Repeat Sacn: </span><p>The security code has been queried <span>". $code->scanned ."time(s)</span>, 
-            first query <span> Israel Time:". $information->currentTime ." (UTC+2), IP:". $information->ip ." </span></p>";
+            first query <span> Beijing Time:". $information->currentTime ." (UTC+8), IP:". $information->ip ." </span></p>";
         }
 
         if($informations)
@@ -95,7 +129,7 @@ class CodesController extends Controller
             $inject2 = "<h4>Last 5 Scanned: </h4><div class='update-section'>";
             foreach($informations as $info)
             {
-                $inject2 .= "<p>Israel Time: ". $info->currentTime ." (UTC+2), IP: ". $info->ip ." </span></p>";
+                $inject2 .= "<p>Beijing Time: <span>". $info->currentTime ."</span> (UTC+8), IP: <span>". $info->ip ."</span>, Address: <span>". $info->cityName .', '. $info->countryName ."</span></p>";
             }
             $inject2 .= "</div>";
         }

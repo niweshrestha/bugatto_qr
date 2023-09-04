@@ -2,6 +2,18 @@
 
 @section('title', ' - Home')
 
+@push('extra-styles')
+    <style>
+        table td.img-holder img {
+            width: 39px;
+            height: 39px;
+            padding: 2px;
+            border: 1px solid #333;
+            border-radius: unset;
+        }
+    </style>
+@endpush    
+
 @section('content')
 <div class="row">
     <div class="col-md-4 stretch-card grid-margin">
@@ -12,8 +24,10 @@
                 <h4 class="font-weight-normal mb-3">Total QRCodes <i
                         class="mdi mdi-chart-line mdi-24px float-right"></i>
                 </h4>
-                <h2 class="mb-5">3.5M</h2>
-                <h6 class="card-text">Increased by 60%</h6>
+                <h2 class="mb-5">{{ $totalCode }}</h2>
+                @if(!$growthPercentage == 0)
+                <h6 class="card-text">{{ ($growthPercentage > 0) ? 'Increased':'Decreased'}} by {{ abs($growthPercentage) }}%</h6>
+                @endif
             </div>
         </div>
     </div>
@@ -25,8 +39,10 @@
                 <h4 class="font-weight-normal mb-3">Scanned QRCodes <i
                         class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                 </h4>
-                <h2 class="mb-5">45,6334</h2>
-                <h6 class="card-text">Decreased by 10%</h6>
+                <h2 class="mb-5">{{ $scannedCode }}</h2>
+                @if(!$scannedGrowthPercentage == 0)
+                <h6 class="card-text">{{ ($scannedGrowthPercentage > 0) ? 'Increased':'Decreased'}} by {{ abs($scannedGrowthPercentage) }}%</h6>
+                @endif
             </div>
         </div>
     </div>
@@ -38,8 +54,10 @@
                 <h4 class="font-weight-normal mb-3">Scanned QRCodes (Multiple) <i
                         class="mdi mdi-diamond mdi-24px float-right"></i>
                 </h4>
-                <h2 class="mb-5">95,5741</h2>
-                <h6 class="card-text">Increased by 5%</h6>
+                <h2 class="mb-5">{{ $multScannedCode }}</h2>
+                @if(!$multiScannedGrowthPercentage == 0)
+                <h6 class="card-text">{{ ($multiScannedGrowthPercentage > 0) ? 'Increased':'Decreased'}} by {{ abs($multiScannedGrowthPercentage) }}%</h6>
+                @endif
             </div>
         </div>
     </div>
@@ -63,76 +81,26 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse ($recentScanned as $recent)
                             <tr>
-                                <td> 1080 </td>
-                                <td>
-                                    <img src="{{asset('dashboard/assets/images/faces/face1.jpg')}}" class="me-2"
-                                        alt="image"> David Grey
+                                <td> {{ $recent->id }} </td>
+                                <td class="img-holder">
+                                    <img src="{{asset('storage/'. $recent->code->qr_path)}}" class="me-2"
+                                        alt="qr-code">
                                 </td>
-                                <td> 0000000025 </td>
-                                <td> 1 </td>
-                                <td> Kathmandu, Nepal </td>
-                                <td> March 5, 2023 </td>
+                                <td> {{ $recent->code->security_no }} </td>
+                                <td> {{ $recent->code->scanned }} </td>
+                                <td> {{ $recent->cityName }}, {{ $recent->countryName }} </td>
+                                <td> {{ $recent->currentTime }} (UTC+8) </td>
                                 <td>
-                                    <label class="badge badge-gradient-success">Correct Scanned</label>
+                                    <label class="badge {{ ($recent->code->scanned > 1) ? 'badge-gradient-danger':'badge-gradient-success'}}">
+                                        {{ ($recent->code->scanned > 1) ? 'Repeat Scanned':'Correct Scanned'}}
+                                    </label>
                                 </td>
                             </tr>
-                            <tr>
-                                <td> 1506 </td>
-                                <td>
-                                    <img src="{{asset('dashboard/assets/images/faces/face1.jpg')}}" class="me-2"
-                                        alt="image"> David Grey
-                                </td>
-                                <td> 0000013025 </td>
-                                <td> 4 </td>
-                                <td> Kathmandu, Nepal </td>
-                                <td> March 5, 2023 </td>
-                                <td>
-                                    <label class="badge badge-gradient-danger">Repeat Scanned</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 256 </td>
-                                <td>
-                                    <img src="{{asset('dashboard/assets/images/faces/face1.jpg')}}" class="me-2"
-                                        alt="image"> David Grey
-                                </td>
-                                <td> 0000330025 </td>
-                                <td> 1 </td>
-                                <td> Kathmandu, Nepal </td>
-                                <td> March 5, 2023 </td>
-                                <td>
-                                    <label class="badge badge-gradient-success">Correct Scanned</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 69854 </td>
-                                <td>
-                                    <img src="{{asset('dashboard/assets/images/faces/face1.jpg')}}" class="me-2"
-                                        alt="image"> David Grey
-                                </td>
-                                <td> 0000006354 </td>
-                                <td> 2 </td>
-                                <td> Kathmandu, Nepal </td>
-                                <td> March 5, 2023 </td>
-                                <td>
-                                    <label class="badge badge-gradient-danger">Repeat Scanned</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 1125 </td>
-                                <td>
-                                    <img src="{{asset('dashboard/assets/images/faces/face1.jpg')}}" class="me-2"
-                                        alt="image"> David Grey
-                                </td>
-                                <td> 0000015698 </td>
-                                <td> 105 </td>
-                                <td> Kathmandu, Nepal </td>
-                                <td> March 5, 2023 </td>
-                                <td>
-                                    <label class="badge badge-gradient-danger">Repeat Scanned</label>
-                                </td>
-                            </tr>
+                            @empty
+                            <p>No Code Scanned Yet.</p>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

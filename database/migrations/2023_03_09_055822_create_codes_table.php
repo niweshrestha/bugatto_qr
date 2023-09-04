@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('codes', function (Blueprint $table) {
             $table->id();
-            $table->string('security_no');
-            $table->string('qr_path');
-            $table->integer('scanned');
+            $table->string('security_no')->nullable();
+            $table->string('qrs')->nullable();
+            $table->string('qr_path')->nullable();
+            $table->integer('scanned')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

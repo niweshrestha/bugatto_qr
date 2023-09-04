@@ -9,6 +9,8 @@ class Information extends Model
 {
     use HasFactory;
 
+    protected $table = "information";
+
     protected $fillable = [
         'code_id',
         'ip',
@@ -27,4 +29,9 @@ class Information extends Model
         'timezone',
         'currentTime'
     ];
+
+    public function code()
+    {
+        return $this->belongsTo(Code::class);
+    }
 }

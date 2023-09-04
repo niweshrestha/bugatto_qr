@@ -14,7 +14,7 @@
         .underlay-background {
             position: absolute;
             top: 0;
-            bottom: -300px;
+            bottom: -450px;
             left: 0;
             right: 0;
             z-index: -1;
@@ -159,6 +159,26 @@
             text-align: center;
             margin: 20px 0;
         }
+
+        .update-section > p {
+            font-size: 12px;
+            line-height: 18px;
+            font-weight: 600;
+            color: #555;
+            padding: 10px;
+            background: #fff;
+            border-radius: 3px;
+        }
+
+        .update-section span {
+            font-weight: 700;
+            color: #333;
+        }
+
+        .register-btn {
+            text-align: center;
+            margin: 20px 0;
+        }
     </style>
 @endpush
 
@@ -171,7 +191,7 @@
 
         <div class="main-section">
             <div class="logo-holder">
-                <img src="{{ asset('web/assets/images/logo.svg') }}" alt="bugatti-logo">
+                <img src="{{ asset('web/assets/images/logo.webp') }}" alt="bugatti-logo">
             </div>
             <div class="icon-holder">
                 <img src="{{ asset('web/assets/images/alert.png') }}" alt="Verified">
@@ -203,10 +223,25 @@
                     <div class="details">
                         <h4>Scan Results</h4>
                         <h5>The security code you have queried has been queried <span>{{ $code->scanned }} time(s)</span>, 
-                            first query <span>Beijing Time: 2022/03/15 5:45:35(UTC+8), IP:84:656L5468468 </span>, Please confirm. 
+                            first query <span>Beijing Time:{{ $information->currentTime }}(UTC+8), IP: {{ $information->ip }}, Location: {{ $information->cityName }}, {{ $information->countryName }} </span>, Please confirm. 
                             Warning: if this time period is not my query, beware of counterfeiting!</h5>
                     </div>
                 </div>
+                <div class="info-items">
+                    <div class="icon-holder-sm">
+                        <img src="{{ asset('web/assets/images/close.png') }}" alt="Verified">
+                    </div>
+                    <div class="details">
+                        <h4>Last 3 Scanned</h4>
+                        <div class='update-section'>
+                            <?php $totalCode = $code->informations->count(); ?>
+                            @foreach ($code->informations->skip($totalCode - 3)->take(3) as $info)
+                            <p>Beijing Time: <span> {{ $info->currentTime }} </span> (UTC+8), IP: <span> {{ $info->ip }} </span>, Address: <span> {{ $info->cityName }}, {{ $info->countryName }}</span></p>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="info-items">
                     <div class="icon-holder-sm">
                         <img src="{{ asset('web/assets/images/check.png') }}" alt="Verified">
@@ -214,33 +249,37 @@
                     <div class="details">
                         <h4>Coorporate Information</h4>
                         <div class="comp-info">
-                            <h4>Bugatti LLC</h4>
+                            <h4>ELITE GROUP YJ LLC</h4>
                         </div>
                         <div class="comp-info">
                             <div class="icon-holder-sm">
                                 <img src="{{ asset('web/assets/images/global.png') }}" alt="Verified">
                             </div>
-                            <p>www.bugattiaccessories.com</p>
+                            <p>www.bugatti-e.com</p>
                         </div>
-                        <div class="comp-info">
+                        {{-- <div class="comp-info">
                             <div class="icon-holder-sm">
                                 <img src="{{ asset('web/assets/images/phone-call.png') }}" alt="Verified">
                             </div>
                             <p>(786) 713-86162</p>
-                        </div>
+                        </div> --}}
                         <div class="comp-info">
                             <div class="icon-holder-sm">
                                 <img src="{{ asset('web/assets/images/email.png') }}" alt="Verified">
                             </div>
-                            <p>support@bugatti.com</p>
+                            <p>info@bugatti-e.com</p>
                         </div>
                         <div class="comp-info">
                             <div class="icon-holder-sm">
                                 <img src="{{ asset('web/assets/images/placeholder.png') }}" alt="Verified">
                             </div>
-                            <p>Street Roseville NH 11523</p>
+                            <p>1301 Shotgun Road Sunrise FL 33326 USA</p>
                         </div>
                     </div>
+                </div>
+
+                <div class="register-btn">
+                    <a href="{{route('web.landing')}}" class="btn btn-gradient-success me-2">Register for lottery</a>
                 </div>
             </div>
         </div>

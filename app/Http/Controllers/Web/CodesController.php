@@ -19,7 +19,8 @@ class CodesController extends Controller
         // if no security no in parameter return view
         if(!$security_no)
         {
-            return view('web.pages.verify.verify-product');
+            // return view('web.pages.verify.verify-product');
+            abort('404');
         }
 
         // if security no exist get the first data
@@ -30,7 +31,8 @@ class CodesController extends Controller
             abort(404);
         }
 
-        $ip = '103.186.197.152'; //request()->ip(); // current request ip
+        // $ip = '103.186.197.152'; 
+        $ip = request()->ip(); // current request ip
         $currentUserInfo = Location::get($ip); // user location information
         date_default_timezone_set('Asia/Jerusalem');
         $currentTime = Carbon::now(); // according to set timezone
@@ -64,7 +66,7 @@ class CodesController extends Controller
             DB::rollback();
             $this->error = 'Ops! looks like we had some problem';
             // $this->error = $e->getMessage();
-            return redirect()->route('admin.code.generate')->with('error-message', $this->error);
+            return redirect()->route('web.contact')->with('error-message', $this->error);
         }
         
 
@@ -74,19 +76,20 @@ class CodesController extends Controller
             DB::beginTransaction();
             try{
 
-                // $getCode->scanned = $getCode->scanned + 1;
+                $getCode->scanned = $getCode->scanned + 1;
                 $getCode->save();
                 DB::commit();
 
                 return view('web.pages.verify.correct', [
-                    'code' => $getCode
+                    'code' => $getCode,
+                    'information' => $getCode->informations->first()
                 ]);
 
             } catch (\Exception $e) {
                 DB::rollback();
                 $this->error = 'Ops! looks like we had some problem';
                 // $this->error = $e->getMessage();
-                return redirect()->back()->with('error-message', $this->error);
+                return redirect()->route('web.contact')->with('error-message', $this->error);
             }
         }
 
@@ -94,19 +97,20 @@ class CodesController extends Controller
         DB::beginTransaction();
         try{
 
-            // $getCode->scanned = $getCode->scanned + 1;
+            $getCode->scanned = $getCode->scanned + 1;
             $getCode->save();
             DB::commit();
 
             return view('web.pages.verify.repeat', [
-                'code' => $getCode
+                'code' => $getCode,
+                'information' => $getCode->informations->first()
             ]);
 
         } catch (\Exception $e) {
             DB::rollback();
             $this->error = 'Ops! looks like we had some problem';
             // $this->error = $e->getMessage();
-            return redirect()->route('admin.code.generate')->with('error-message', $this->error);
+            return redirect()->route('web.contact')->with('error-message', $this->error);
         }
     }
 }

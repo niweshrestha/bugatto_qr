@@ -16,11 +16,9 @@
         }
 
         .table img.img-holder {
-            border-radius: 3px;
-            width: 42px;
-            height: 42px;
-            padding: 3px;
-            background-color: #b0d2e9f3;
+            border-radius: unset;
+            width: 8mm;
+            height: 8mm;
             box-sizing: border-box;
         }
         
@@ -34,9 +32,15 @@
             font-size: 12px;
             line-height: 18px;
             font-weight: 600;
+            color: #555;
             padding: 10px;
             background: #fff;
             border-radius: 3px;
+        }
+
+        .update-section span {
+            font-weight: 700;
+            color: #333;
         }
 
         .top-infos {
@@ -79,7 +83,7 @@
                 <div class="card-title-holder">
                     <h4 class="card-title">All QR Codes</h4>
                     <a href="{{ route('admin.code.generate') }}" class="btn btn-gradient-primary btn-icon-text btn-sm">
-                        <i class="mdi mdi-plus btn-icon-prepend"></i> Generate New
+                        <i class="mdi mdi-plus btn-icon-prepend"></i> Import New
                     </a>
                 </div>
                 <hr>
@@ -88,8 +92,9 @@
                         <thead>
                             <tr>
                                 <th> ID </th>
-                                <th> QR </th>
+                                {{-- <th> QR </th> --}}
                                 <th> Security No. </th>
+                                <th> QrCode </th>
                                 <th> Scanned No. </th>
                                 <th> Location </th>
                                 <th> Date </th>
@@ -101,16 +106,27 @@
                             @foreach($codes as $code)
                             <tr>
                                 <td> {{$code->id}} </td>
-                                <td>
-                                    <img src="{{asset('storage/'. $code->qr_path);}}" class="img-holder"
-                                        alt="QR-Code">
-                                </td>
+                                {{-- <td>
+                                    @if ($code->qr_path)
+                                    <img src="{{asset('storage/'. $code->qr_path)}}" class="img-holder"
+                                    alt="QR-Code">
+                                    @else
+                                    <img src="{{asset('dashboard/assets/images/no-qr.png')}}" class="img-holder"
+                                    alt="QR-Code">
+                                    @endif
+                                </td> --}}
                                 <td> {{$code->security_no}} </td>
+                                <td> {{$code->qrs}} </td>
                                 <td> {{$code->scanned}} </td>
-                                <td> Kathmandu, Nepal </td>
-                                <td> March 5, 2023 </td>
+                                @if($code->informations->first() !== null)
+                                <td> {{$code->informations->first()->cityName, $code->informations->first()->countryName}} </td>
+                                <td> {{$code->informations->first()->currentTime}} </td>
+                                @else
+                                <td> </td>
+                                <td> </td>
+                                @endif
                                 <td>
-                                    <label class="badge badge-gradient-success">Correct Scanned</label>
+                                    <label class="badge {{($code->scanned <= 1) ? 'badge-gradient-success':'badge-gradient-danger'}}">{{($code->scanned <= 1) ? 'Correct Scanned':'Repeat Scanned'}}</label>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-gradient-danger btn-icon btn-sm viewdetails" title="View Details" data-id='{{ $code->id }}'>
@@ -123,6 +139,9 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="card-footer">
+                {{ $codes->links() }}
             </div>
         </div>
     </div>

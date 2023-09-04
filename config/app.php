@@ -186,6 +186,7 @@ return [
          * Package Service Providers...
          */
         Stevebauman\Location\LocationServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -210,6 +211,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Location' => 'Stevebauman\Location\Facades\Location',
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ])->toArray(),
 
 ];

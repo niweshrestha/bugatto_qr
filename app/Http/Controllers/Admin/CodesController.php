@@ -53,11 +53,11 @@ class CodesController extends Controller
         }
     }
 
-    public function generateBackup(Request $request) 
+    public function generateEach(Request $request) 
     {
         if ($request->isMethod('get'))
         {
-            return view('dashboard.pages.codes.generate');
+            return view('dashboard.pages.codes.each_generate');
         }
 
         if ($request->isMethod('POST')) 

@@ -21,6 +21,7 @@ Route::group([
     Route::controller(CodesController::class)->group(function() {
         Route::get('/codes/lists', 'lists')->name('code.lists');
         Route::match(['get', 'post'], '/codes/import', 'generate')->name('code.generate');
+        Route::match(['get', 'post'], '/codes/each', 'generateEach')->name('code.generate.each');
         Route::get('/view-code/{codeId}', 'show')->name('code.show');
     });
     Route::controller(LotteryController::class)->group(function() {

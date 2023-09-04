@@ -56,7 +56,7 @@ class LandingController extends Controller
             $applicant->phone = $request->phone;
             $applicant->save();
             DB::commit();
-            return redirect()->route('web.contact')->with('success', "Thank You! for your participation and support.");
+            return redirect()->route('web.contact')->with('success', "We will update you by email or text message about the outcome of the lottery. Good luck!.");
         } catch (\Exception $e) {
             DB::rollback();
             $this->error = 'Ops! looks like we had some problem';

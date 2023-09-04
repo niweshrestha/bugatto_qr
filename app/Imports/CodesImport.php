@@ -27,22 +27,22 @@ class CodesImport implements ToCollection, WithHeadingRow
          ])->validate();
 
         // initial veriables
-        // $domain = URL::to('/'); // generate url
-        // $url = $domain.'/vp';
+        $domain = URL::to('/'); // generate url
+        $url = $domain.'/vp';
   
         foreach ($rows as $row) {
 
-            // $currentTime = time(); // time in sec
-            // $imageName = 'qrcode-'.$currentTime.'-'.$row['codes'].'.png'; // full image name
-            // $date = Carbon::now()->format('Y-m-d'); // folder date
-            // $imgPath = 'qrcode-'.$date.'/'.$imageName; // full path
-            // $qrCode = QrCode::format('png')->size(100)->errorCorrection('H')->generate($url.'/'.$row['codes']); // Generate QR
-            // Storage::disk('public')->put($imgPath, $qrCode); // image save
+            $currentTime = time(); // time in sec
+            $imageName = 'qrcode-'.$currentTime.'-'.$row['codes'].'.png'; // full image name
+            $date = Carbon::now()->format('Y-m-d'); // folder date
+            $imgPath = 'qrcode-'.$date.'/'.$imageName; // full path
+            $qrCode = QrCode::format('png')->size(100)->errorCorrection('H')->generate($url.'/'.$row['codes']); // Generate QR
+            Storage::disk('public')->put($imgPath, $qrCode); // image save
 
             Code::create([
                 'security_no' => $row['codes'],
                 'qrs' => $row['qrs'],
-                // 'qr_path' => $imgPath
+                'qr_path' => $imgPath
             ]);
         }
     }

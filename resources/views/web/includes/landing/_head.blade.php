@@ -189,4 +189,20 @@
         padding: 20px 0;
         color: lightslategrey;
     }
+
+    .img-holder {
+        flex: 1;
+        overflow: hidden;
+        padding: 5px;
+        background: #fff;
+        border-radius: 3px;
+        margin-right: 10px;
+    }
+
+    .img-holder > img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
 </style>

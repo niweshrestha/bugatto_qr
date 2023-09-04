@@ -78,8 +78,12 @@ background-size: cover; min-height: 100vh; position: relative; background-attach
                                 @if (Session::has('error_message'))
                                     <div class="alert alert-danger">{{Session::get('error_message')}}</div>
                                 @endif
-                                <h3 class="display-4">Join Lottery</h3>
-                                <p class="text-muted m-0 p-0 pb-4 text-capitalize">{{$lottery->title}}</p>
+                                <h5 class="display-8">Join Lottery</h5>
+                                <h3 class="display-6">{{$lottery->title}}</h3>
+                                <p class="text-muted m-0 p-0 pb-4 text-capitalize">{{$lottery->description}}</p>
+                                <div class="img-holder">
+                                    <img src="{{asset('storage/uploads/'. $lottery->file)}}" alt="cover-image">
+                                </div>
                                 @if($lotteryEnds == true)
                                     <div class="wrap-countdown mercado-countdown" data-expire="{{ Carbon\Carbon::parse($lottery->to_date)->format('Y/m/d h:i:s') }}"></div>
                                     <form action="{{ route('web.applicant.join', ['id' => Crypt::encrypt($lottery->id)]) }}"

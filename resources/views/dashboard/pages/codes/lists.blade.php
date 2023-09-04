@@ -126,7 +126,7 @@
                                 <td> </td>
                                 @endif
                                 <td>
-                                    <label class="badge {{($code->scanned <= 1) ? 'badge-gradient-success':'badge-gradient-danger'}}">{{($code->scanned <= 1) ? 'Correct Scanned':'Repeat Scanned'}}</label>
+                                    <label class="badge {{ ($code->scanned < 1) ? 'badge-gradient-primary' : ($code->scanned == 1 ? 'badge-gradient-success' : 'badge-gradient-danger') }}">{{ ($code->scanned < 1) ? 'Not Scanned' : ($code->scanned == 1 ? 'Correct Scanned' : 'Repeat Scanned') }}</label>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-gradient-danger btn-icon btn-sm viewdetails" title="View Details" data-id='{{ $code->id }}'>

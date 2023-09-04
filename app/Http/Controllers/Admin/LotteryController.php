@@ -35,6 +35,8 @@ class LotteryController extends Controller
         {
             $request->validate([
                 'title' => 'required',
+                'description' => 'required',
+                'file' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'date' => 'required'
             ]);
 
@@ -43,11 +45,18 @@ class LotteryController extends Controller
             try {
                 $lottery = new Lottery();
                 $lottery->title = $request->title;
+                $lottery->description = $request->description;
                 $lottery->from_date = $request->from_date;
                 $lottery->to_date = $request->to_date;
                 $lottery->is_active = 1;
-                $lottery->save(); // saving code
+               
 
+                // Store the uploaded image in the 'public/uploads' directory
+                $imageName = time() . '.' . $request->file->extension();
+                $request->file->storeAs('uploads', $imageName, 'public');
+
+                $lottery->file = $imageName;
+                $lottery->save(); // saving code
                 DB::commit();
                 return redirect()->route('admin.lottery.lists')->with('success','Lottery has been created successfully.');
             } catch (\Exception $e) {

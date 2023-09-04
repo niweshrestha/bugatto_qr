@@ -19,6 +19,20 @@
                         @enderror
                     </div>
                     <div class="form-group has-validation">
+                        <label for="Description">Description</label>
+                        <input type="text" class="form-control @error('description') is-invalid @enderror" id="description" name="description" placeholder="Description Here">
+                        @error('description')
+                        <small id="title" class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group has-validation">
+                        <label for="file">Cover Image</label>
+                        <input type="file" class="form-control @error('file') is-invalid @enderror" id="file" name="file">
+                        @error('file')
+                        <small id="title" class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group has-validation">
                         <label>Select Lottery Date</label>
                         <input type="text" class="form-control @error('date') is-invalid @enderror" name="date" value="" />
                         @error('date')

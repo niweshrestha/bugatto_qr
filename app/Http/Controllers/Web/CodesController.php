@@ -34,7 +34,7 @@ class CodesController extends Controller
         // $ip = '103.186.197.152'; 
         $ip = request()->ip(); // current request ip
         $currentUserInfo = Location::get($ip); // user location information
-        date_default_timezone_set('Asia/Shanghai'); // change timezone to asia/shanghai
+        date_default_timezone_set('Asia/Jerusalem');
         $currentTime = Carbon::now(); // according to set timezone
 
         try {

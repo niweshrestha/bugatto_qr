@@ -96,6 +96,7 @@ class CodesController extends Controller
                     
                     DB::commit();
                 }
+		DB::commit();
             } catch (\Exception $e) {
                 DB::rollback();
                 $this->error = 'Ops! looks like we had some problem';
@@ -117,7 +118,7 @@ class CodesController extends Controller
 
         if(!$code->scanned)
         {
-            $inject1 = "<span class='badge badge-gradient-success'>Correct Sacn: </span><p>The security code you have queried has not been scanned yet and the product is <span>genuine</span>.</p>";
+            $inject1 = "<span class='badge badge-gradient-success'>Correct Scan: </span><p>The security code you have queried has not been scanned yet and the product is <span>genuine</span>.</p>";
         } else {
             $inject1 = "<span class='badge badge-gradient-danger'>Repeat Sacn: </span><p>The security code has been queried <span>". $code->scanned ."time(s)</span>, 
             first query <span> Miami Time:". $information->currentTime ." (UTC+8), IP:". $information->ip ." </span></p>";

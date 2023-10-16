@@ -2,13 +2,22 @@
 
 @section('title', ' - Generate Codes')
 
+@push('extra-styles')
+    <style>
+        .card-description a {
+            text-decoration: none;
+            color: #fe7096;
+        }
+    </style>
+@endpush
+
 @section('content')
 <div class="row">
     <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Import Security Code</h4>
-                <p class="card-description"> From here you can import csv file. </p>
+                <p class="card-description"> From here you can import csv file. <a href="{{ route('admin.file.download', ['filename' => 'sample.csv']) }}">Download sample.csv</a></p>
                 <form class="forms-sample" action="{{ route('admin.code.generate') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group has-validation">

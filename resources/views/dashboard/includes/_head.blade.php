@@ -34,5 +34,10 @@
         width: 100%;
         margin-left: 36px;
     }
+    .qr-holder > svg {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
 </style>
 @stack('extra-styles')

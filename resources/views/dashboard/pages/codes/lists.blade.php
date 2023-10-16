@@ -72,6 +72,18 @@
         margin-top: 20px;
         text-indent: 20px;
     }
+
+    .form-group select option {
+        padding: 0.94rem 1.375rem!important;
+        font-size: 0.9125rem;
+    }
+
+    .form-items-group {
+        display: flex;
+        justify-content: end;
+        align-content: center;
+        gap: 10px;
+    }
 </style>
 @endpush
 
@@ -91,18 +103,49 @@
                             class="btn btn-gradient-primary btn-icon-text btn-sm">
                             <i class="mdi mdi-plus btn-icon-prepend"></i> Bulk Import
                         </a>
+                        <a href="{{ route('admin.code.export', ['brandId' => $brandId ?? null]) }}"
+                            class="btn btn-gradient-danger btn-icon-text btn-sm">
+                            <i class="mdi mdi-upload btn-icon-prepend"></i> Export Data
+                        </a>
+                        @if($brandId)
+                        <a href="{{ route('admin.code.zip.download', $brandId) }}"
+                            class="btn btn-gradient-success btn-icon-text btn-sm">
+                            <i class="mdi mdi-download btn-icon-prepend"></i> Download .zip
+                        </a>
+                        @endif
                     </div>
 
                 </div>
                 <hr>
+
+                <div class="card-title-holder">
+                    <h4 class="card-title">Filter by Brand: @if($brandId) @if(count($codes)) {{ $codes[0]->brand->name }} @else N/A @endif @else All @endif</h4>
+                    <form method="post" action="{{ route('admin.code.lists') }}">
+                        @csrf
+                        <div class="form-items-group">
+                            <div class="form-group has-validation" style="margin-bottom: 0;">
+                                <select name="brand" class="form-control @error('brand') is-invalid @enderror" style="padding: 0.94rem 1.375rem!important; width: 200px;">
+                                    <option value="">Select Brand</option>
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('brand')
+                                <small id="brand" class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn btn-gradient-danger btn-sm me-2">Apply Filters</button>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="table-responsive">
                     <table class="table" id="codeTable">
                         <thead>
                             <tr>
                                 <th> ID </th>
-                                {{-- <th> QR </th> --}}
+                                <th> Product of. </th>
                                 <th> Security No. </th>
-                                {{-- <th> QrCode </th> --}}
                                 <th> Scanned No. </th>
                                 <th> Location </th>
                                 <th> Date </th>
@@ -114,16 +157,8 @@
                             @foreach($codes as $code)
                             <tr>
                                 <td> {{$code->id}} </td>
-                                {{-- <td>
-                                    @if ($code->qr_path)
-                                    <img src="{{asset('storage/'. $code->qr_path)}}" class="img-holder" alt="QR-Code">
-                                    @else
-                                    <img src="{{asset('dashboard/assets/images/no-qr.png')}}" class="img-holder"
-                                        alt="QR-Code">
-                                    @endif
-                                </td> --}}
+                                <td> {{$code->brand->name}} </td>
                                 <td> {{$code->security_no}} </td>
-                                {{-- <td> {{$code->qrs}} </td> --}}
                                 <td> {{$code->scanned}} </td>
                                 @if($code->informations->first() !== null)
                                 <td> {{$code->informations->first()->cityName,

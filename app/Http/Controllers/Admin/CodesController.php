@@ -14,7 +14,12 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Maatwebsite\Excel\Facades\Excel;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+// use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\Output\{
+    QRImage
+};
+use chillerlan\QRCode\QROptions;
 use ZipArchive;
 
 class CodesController extends Controller
@@ -107,8 +112,31 @@ class CodesController extends Controller
                     $currentTime = time(); // time in sec
                     $imageName = 'qrcode-' . $currentTime . '-' . $securityNo . '.png'; // full image name
                     $imgPath = 'qrcode-' . $request->brand . '/' . $imageName; // full path
-                    $qrCode = QrCode::format('png')->margin(2)->size(30.4)->eye('square')->style('square')->errorCorrection('M')->generate($url . '/' . $securityNo); // Generate QR
-                    Storage::disk('public')->put($imgPath, $qrCode); // image save
+                    // $qrCode = QrCode::format('png')->margin(2)->size(30.4)->eye('square')->style('square')->errorCorrection('M')->generate($url . '/' . $securityNo); // Generate QR
+                    $options = new QROptions([
+                        'imageBase64' => false,
+                        'outputType' => QRCode::OUTPUT_IMAGICK,
+                        'eccLevel' => QRCode::ECC_M,
+                        'version' => 3,
+                        'scale' => 1.322835,
+                        'returnResource' => true,
+                        // 'imageTransparent' => true,
+                        // 'addQuietzone' => false,
+                        // 'markupLight' => 'rgba(0,0,0,0)',
+                        // 'markupDark' => '#000000',
+                    ]);
+                    $qr = new QRCode($options);
+
+                    /** @var \Imagick */
+                    $img = $qr->render($url . '/' . $securityNo);
+
+                    $img->setImageFormat('png');
+                    $img->setOption('png:compression-level', 6);
+
+                    // Laravel can only display saved files
+                    $img->writeImage("D:/xampp-transfer/bugatti_qr/public/storage/"  . $imgPath);
+
+                    // Storage::disk('public')->put($imgPath, $qrCode); // image save
                     // create code
                     $code = new Code;
                     $code->brand_id = $request->brand;
@@ -126,7 +154,7 @@ class CodesController extends Controller
                 $this->error = $e->getMessage();
                 return redirect()->route('admin.code.generate')->with('error-message', $this->error);
             }
-            
+
             return redirect()->route('admin.code.lists')->with('success', 'Code has been generated successfully.');
         }
     }
@@ -161,14 +189,14 @@ class CodesController extends Controller
             $html = "<div class='informations'>
                         <div class='top-infos'>
                             <div class='qr-holder'>
-                                ".QrCode::format('svg')->margin(2)->size(100)->eye('square')->style('square')->errorCorrection('L')->generate($url . '/' . $code->securityNo)."
+                                " . QrCode::format('svg')->margin(2)->size(100)->eye('square')->style('square')->errorCorrection('L')->generate($url . '/' . $code->securityNo) . "
                             </div>
                             <div class='info-data'>
                                 <p><span class='badge badge-gradient-primary'>S.No.: " . $code->security_no . "</span></p>" .
-                                $inject1 .
-                            "</div>
+                $inject1 .
+                "</div>
                         </div>" .
-                        $inject2 . "
+                $inject2 . "
                     </div>";
         }
         $response['html'] = $html;
@@ -181,17 +209,14 @@ class CodesController extends Controller
         $zip = new ZipArchive;
         $fileName = 'download-file.zip';
 
-        if($zip->open($fileName, ZipArchive::CREATE))
-        {
-            if($brandId)
-            {
-                if(file_exists(public_path('storage/qrcode-' . $brandId))){
+        if ($zip->open($fileName, ZipArchive::CREATE)) {
+            if ($brandId) {
+                if (file_exists(public_path('storage/qrcode-' . $brandId))) {
                     $files = File::files(public_path('storage/qrcode-' . $brandId));
 
-                    foreach($files as $file)
-                    {
+                    foreach ($files as $file) {
                         $nameInZipFile = basename($file);
-                        $zip->addFile($file,$nameInZipFile);
+                        $zip->addFile($file, $nameInZipFile);
                     }
 
                     $zip->close();

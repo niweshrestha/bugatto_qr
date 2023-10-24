@@ -19,6 +19,19 @@
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#brand" aria-expanded="false"
+                aria-controls="brand">
+                <span class="menu-title">Brands</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="brand">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.brand.lists') }}">Show Lists</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.brand.generate') }}">Add New Brand</a></li>
+                </ul>
+            </div>
+        </li>
         <li class="nav-item sidebar-actions">
             <span class="nav-link">
                 <div class="border-bottom">

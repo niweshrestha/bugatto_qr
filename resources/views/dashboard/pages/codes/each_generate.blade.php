@@ -2,6 +2,15 @@
 
 @section('title', ' - Generate Codes')
 
+@push('extra-styles')
+    <style>
+        .form-group select option {
+            padding: 0.94rem 1.375rem!important;
+            font-size: 0.9125rem;
+        }
+    </style>
+@endpush
+
 @section('content')
 <div class="row">
     <div class="col-md-6 grid-margin stretch-card">
@@ -11,6 +20,18 @@
                 <p class="card-description"> From here you can generate new QR codes as needed. </p>
                 <form class="forms-sample" action="{{ route('admin.code.generate.each') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <div class="form-group has-validation">
+                        <label for="customSelect">Product of Brand</label>
+                        <select name="brand" class="form-control @error('brand') is-invalid @enderror" style="padding: 0.94rem 1.375rem!important;">
+                            <option value="">Choose Brand</option>
+                            @foreach($brands as $brand)
+                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('brand')
+                        <small id="brand" class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
                     <div class="form-group has-validation">
                         <label for="number">Number of QR Codes</label>
                         <input type="number" class="form-control @error('number') is-invalid @enderror" id="number" name="number" min="1" placeholder="eg: 500">
@@ -26,3 +47,25 @@
     </div>
 </div>
 @stop
+
+@push('extra-scripts')
+{{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#customSelect').select2({
+            templateResult: formatOption
+        });
+    });
+
+    function formatOption(option) {
+        if (!option.id) {
+            return option.text;
+        }
+        var imageUrl = $(option.element).data('image');
+        var $option = $(
+            `<span><img src="${imageUrl}" class="select-image" /> ${option.text}</span>`
+        );
+        return $option;
+    }
+</script> --}}
+@endpush

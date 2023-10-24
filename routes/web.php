@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\CustomAuthController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CodesController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LotteryController;
@@ -18,11 +19,19 @@ Route::group([
 ], function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('signout', [DashboardController::class, 'signOut'])->name('signout');
+    Route::controller(BrandController::class)->group(function() {
+        Route::get('/brands/lists', 'lists')->name('brand.lists');
+        Route::match(['get', 'post'], '/brands/create', 'create')->name('brand.generate');
+        Route::get('/view-brand/{brandId}', 'show')->name('brand.show');
+    });
     Route::controller(CodesController::class)->group(function() {
-        Route::get('/codes/lists', 'lists')->name('code.lists');
+        Route::match(['get', 'post'], '/codes/lists', 'lists')->name('code.lists');
         Route::match(['get', 'post'], '/codes/import', 'generate')->name('code.generate');
         Route::match(['get', 'post'], '/codes/each', 'generateEach')->name('code.generate.each');
         Route::get('/view-code/{codeId}', 'show')->name('code.show');
+        Route::get('/download-zip/{brandId?}', 'zipDownload')->name('code.zip.download');
+        Route::get('/download/{filename}', 'fileDownload')->name('file.download');
+        Route::get('/export/{brandId?}', 'exportToExcel')->name('code.export');
     });
     Route::controller(LotteryController::class)->group(function() {
         Route::get('/lotteries/lists', 'lists')->name('lottery.lists');

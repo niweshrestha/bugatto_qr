@@ -187,6 +187,8 @@ return [
          */
         Stevebauman\Location\LocationServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Milon\Barcode\BarcodeServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -212,6 +214,9 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'Location' => 'Stevebauman\Location\Facades\Location',
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
+        'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ])->toArray(),
 
 ];

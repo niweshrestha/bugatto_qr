@@ -22,8 +22,8 @@ class CodesImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         Validator::make($rows->toArray(), [
-             '*.codes' => 'required',
-             '*.qrs' => 'required',
+             '*.code' => 'required|integer|max:8',
+             '*.brand' => 'required'
          ])->validate();
 
         // initial veriables
@@ -31,18 +31,16 @@ class CodesImport implements ToCollection, WithHeadingRow
         $url = $domain.'/vp';
   
         foreach ($rows as $row) {
-
             $currentTime = time(); // time in sec
-            $imageName = 'qrcode-'.$currentTime.'-'.$row['codes'].'.png'; // full image name
-            $date = Carbon::now()->format('Y-m-d'); // folder date
-            $imgPath = 'qrcode-'.$date.'/'.$imageName; // full path
-            $qrCode = QrCode::format('png')->size(100)->errorCorrection('H')->generate($url.'/'.$row['codes']); // Generate QR
+            $imageName = 'qrcode-'.$currentTime.'-'.$row['code'].'.png'; // full image name
+            $imgPath = 'qrcode-'.$row['brand'].'/'.$imageName; // full path
+            $qrCode = QrCode::format('png')->margin(2)->size(30)->eye('square')->style('square')->errorCorrection('M')->generate($url . '/' . $row['code']); // Generate QR
             Storage::disk('public')->put($imgPath, $qrCode); // image save
 
             Code::create([
-                'security_no' => $row['codes'],
-                'qrs' => $row['qrs'],
-                'qr_path' => $imgPath
+                'security_no' => $row['code'],
+                'qr_path' => $imgPath,
+                'brand_id' => $row['brand']
             ]);
         }
     }

@@ -117,8 +117,8 @@ class CodesController extends Controller
                         'imageBase64' => false,
                         'outputType' => QRCode::OUTPUT_IMAGICK,
                         'eccLevel' => QRCode::ECC_M,
-                        'version' => 3,
-                        'scale' => 1.322835,
+                        'version' => 4,
+                        'scale' => 1.3228346457,
                         'returnResource' => true,
                         // 'imageTransparent' => true,
                         // 'addQuietzone' => false,
@@ -131,10 +131,11 @@ class CodesController extends Controller
                     $img = $qr->render($url . '/' . $securityNo);
 
                     $img->setImageFormat('png');
-                    $img->setOption('png:compression-level', 6);
+                    // $img->setOption('png:compression-level', 6);
 
+                    // dd(public_path($imgPath));
                     // Laravel can only display saved files
-                    $img->writeImage("D:/xampp-transfer/bugatti_qr/public/storage/"  . $imgPath);
+                    $img->writeImage(str_replace("\\", '/', public_path("storage" . "/" . $imgPath)));
 
                     // Storage::disk('public')->put($imgPath, $qrCode); // image save
                     // create code

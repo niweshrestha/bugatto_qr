@@ -75,8 +75,8 @@ class BrandController extends Controller
             $currentTime = time(); // time in sec
             $imageName = $name . '-' . $currentTime . '-' . $type . '.' . $file->getClientOriginalExtension(); // full image name
             $imgPath = 'brand'; // full path
-            $file->move(public_path($imgPath), $imageName);
-            return $imgPath . '/' . $imageName;
+            $file->move(storage_path("app/public/" . $imgPath), $imageName);
+            return 'storage/' .$imgPath . '/' . $imageName;
         } catch (\Exception $e) {
             $this->error = 'Ops! looks like we had some problem: ' . $e->getMessage();
             \Log::error($this->error);

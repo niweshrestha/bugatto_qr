@@ -190,7 +190,7 @@ class CodesController extends Controller
             $html = "<div class='informations'>
                         <div class='top-infos'>
                             <div class='qr-holder'>
-                                " . QrCode::format('svg')->margin(2)->size(100)->eye('square')->style('square')->errorCorrection('L')->generate($url . '/' . $code->securityNo) . "
+                                <img src='/storage/" . $code->qr_path . "' alt=''>
                             </div>
                             <div class='info-data'>
                                 <p><span class='badge badge-gradient-primary'>S.No.: " . $code->security_no . "</span></p>" .

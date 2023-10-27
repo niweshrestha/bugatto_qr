@@ -1,18 +1,17 @@
-@extends('web.layouts.landing')
+@extends('web.layouts.lottery')
 
-@section('title', ' - AnticounterFelting')
+@section('title', $brand->name . ' - AnticounterFelting')
 
 @section('content')
     <div class="container-fluid" id="contact">
         <div class="row no-gutter" style="position: relative;">
             <!-- The overlay -->
-            <div class="d-block d-md-none bg-image-sm"></div>
+            {{-- <div class="d-block d-md-none bg-image-sm"></div> --}}
             <!-- The image half -->
-            <div class="col-md-12 d-none d-md-flex bg-image" style="min-height: 80vh; margin-top: 74px;"></div>
+            {{-- <div class="col-md-7 d-none d-md-flex bg-image"></div> --}}
 
             <!-- The content half -->
-            {{-- <div class="col-md-5" style="min-height: 80vh;"></div> --}}
-            {{-- <div class="col-md-5">
+            <div class="col-md-12">
                 <div class="lottert {{ !$lottery ? 'no-lottert' : '' }} d-flex align-items-center py-5"
                     style="background: rgba(255,255,255,.8);">
                     <!-- Demo content-->
@@ -32,10 +31,10 @@
                                     @endif
                                     <h5 class="display-8">Join Lottery</h5>
                                     <h3 class="display-6">{{ $lottery->title }}</h3>
-                                    <p class="text-muted m-0 p-0 pb-4 text-capitalize">{{ $lottery->description }}</p>
                                     <div class="img-holder">
                                         <img src="{{ asset('storage/uploads/' . $lottery->file) }}" alt="cover-image">
                                     </div>
+                                    <p class="text-muted m-0 p-0 pb-4" style="font-size: 16px;">{{ $lottery->description }}</p>
                                     @if ($lotteryEnds == true)
                                         <div class="wrap-countdown mercado-countdown"
                                             data-expire="{{ Carbon\Carbon::parse($lottery->to_date)->format('Y/m/d h:i:s') }}">
@@ -47,7 +46,7 @@
                                             <div class="form-group has-validation mb-3">
                                                 <input name="fullname" type="fullname" placeholder="Full Name"
                                                     value="{{ old('fullname') }}" required="" autofocus=""
-                                                    class="@error('fullname') is-invalid @enderror form-control shadow-sm px-4 text-primary" />
+                                                    class="@error('fullname') is-invalid @enderror form-control shadow-sm px-4" />
                                                 @error('fullname')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -56,7 +55,7 @@
                                             <div class="form-group has-validation mb-3">
                                                 <input name="email" type="email" placeholder="name@example.com"
                                                     value="{{ old('email') }}" required
-                                                    class="@error('email') is-invalid @enderror form-control shadow-sm px-4 text-primary" />
+                                                    class="@error('email') is-invalid @enderror form-control shadow-sm px-4" />
                                                 @error('email')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -65,7 +64,7 @@
                                             <div class="form-group has-validation mb-3">
                                                 <input name="phone" type="phone" placeholder="Your Phone Number"
                                                     value="{{ old('phone') }}" required
-                                                    class="@error('phone') is-invalid @enderror form-control shadow-sm px-4 text-primary" />
+                                                    class="@error('phone') is-invalid @enderror form-control shadow-sm px-4" />
                                                 @error('phone')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -87,9 +86,8 @@
                     </div><!-- End -->
 
                 </div>
-            </div><!-- End --> --}}
+            </div><!-- End -->
 
         </div>
     </div>
-
 @stop

@@ -7,8 +7,10 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class CodesExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSize
+class CodesExport implements FromQuery, WithColumnFormatting, WithHeadings, WithMapping, ShouldAutoSize
 {
     private $brandId;
 
@@ -20,8 +22,16 @@ class CodesExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSiz
     public function map($row): array
     {
         return [
-            '="' . $row->security_no . '"', // Format as text to preserve leading zeros
+            $row->security_no,
             $row->qr_path,
+        ];
+    }
+
+    public function columnFormats(): array
+    {
+        return [
+            'A' => NumberFormat::FORMAT_TEXT,
+            'B' => NumberFormat::FORMAT_TEXT
         ];
     }
 
@@ -30,7 +40,6 @@ class CodesExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSiz
         return [
             'Codes',
             'QrPath',
-            // Add more headers as needed
         ];
     }
 

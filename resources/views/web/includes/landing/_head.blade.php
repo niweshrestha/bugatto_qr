@@ -168,7 +168,7 @@
         background-image: url("{{ asset('landing/assets/img/bg-hero.jpg') }}");
         background-size: cover;
         background-position: center center;
-        clip-path: polygon(103% 0, 89% 50%, 99% 105%, 0 100%, 0 0);
+        /* clip-path: polygon(103% 0, 89% 50%, 99% 105%, 0 100%, 0 0); */
     }
 
     .bg-image-sm {

@@ -16,4 +16,9 @@ class Lottery extends Model
     {
         return $this->hasMany(Applicant::class);
     }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 }

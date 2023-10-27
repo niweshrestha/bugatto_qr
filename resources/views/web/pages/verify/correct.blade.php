@@ -242,7 +242,7 @@
                 </div>
 
                 <div class="register-btn">
-                    <a href="{{route('web.landing')}}" class="btn btn-gradient-success me-2">Register for lottery</a>
+                    <a href="{{route('web.brand.lottery', $brand->name)}}" class="btn btn-gradient-success me-2">Register for lottery</a>
                 </div>
             </div>
         </div>

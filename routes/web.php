@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\LotteryController;
 // use App\Http\Controllers\QRCodeController;
 use App\Http\Controllers\Web\CodesController as WebCodesController;
 use App\Http\Controllers\Web\LandingController;
+use App\Http\Controllers\Web\LotteryController as WebLotteryController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -55,7 +56,11 @@ Route::group([
     });
     Route::controller(LandingController::class)->group(function() {
         Route::get('/', 'landing')->name('landing');
-        Route::view('/#contact', 'web/pages/front')->name('contact');
+        // Route::view('/#contact', 'web/pages/front')->name('contact');
         Route::post('/lottery/{id}/join', 'joinLottery')->name('applicant.join');
+    });
+    Route::controller(WebLotteryController::class)->group(function() {
+        Route::get('/b/lottery/{name}', 'view')->name('brand.lottery');
+        // Route::post('/lottery/{id}/join', 'joinLottery')->name('applicant.join');
     });
 });

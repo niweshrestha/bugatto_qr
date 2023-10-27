@@ -135,6 +135,8 @@ class CodesController extends Controller
 
                     // dd(storage_path("public/" . $imgPath));
                     // Laravel can only display saved files
+                    $directoryPath = storage_path("app/public/" . 'qrcode-' . $request->brand);
+                    File::isDirectory($directoryPath) or File::makeDirectory($directoryPath, 0777, true, true);
                     $img->writeImage(str_replace("\\", '/', storage_path("app/public/" . $imgPath)));
 
                     // Storage::disk('public')->put($imgPath, $qrCode); // image save

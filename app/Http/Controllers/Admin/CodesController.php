@@ -133,9 +133,9 @@ class CodesController extends Controller
                     $img->setImageFormat('png');
                     // $img->setOption('png:compression-level', 6);
 
-                    // dd(public_path($imgPath));
+                    // dd(storage_path("public/" . $imgPath));
                     // Laravel can only display saved files
-                    $img->writeImage(str_replace("\\", '/', public_path("storage" . "/" . $imgPath)));
+                    $img->writeImage(str_replace("\\", '/', storage_path("app/public/" . $imgPath)));
 
                     // Storage::disk('public')->put($imgPath, $qrCode); // image save
                     // create code

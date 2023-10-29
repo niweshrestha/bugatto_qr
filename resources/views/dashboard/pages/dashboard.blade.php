@@ -91,7 +91,7 @@
                                 <td> {{ $recent->code->security_no }} </td>
                                 <td> {{ $recent->code->scanned }} </td>
                                 <td> {{ $recent->cityName }}, {{ $recent->countryName }} </td>
-                                <td> {{ $recent->currentTime }} (UTC+8) </td>
+                                <td> Miami Time: {{ $recent->currentTime }} </td>
                                 <td>
                                     <label class="badge {{ ($recent->code->scanned > 1) ? 'badge-gradient-danger':'badge-gradient-success'}}">
                                         {{ ($recent->code->scanned > 1) ? 'Repeat Scanned':'Correct Scanned'}}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Rules\Slug;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -27,6 +28,7 @@ class BrandController extends Controller
         if ($request->isMethod('POST')) {
             $request->validate([
                 'name' => 'required|string|max:20',
+                'slug' => ['required', new Slug],
                 'description' => 'nullable|string|min:3',
                 'brand_logo' => 'required|file|mimes:png,jpg,jpeg',
                 'brand_cover' => 'nullable|file|mimes:png,jpg,jpeg',

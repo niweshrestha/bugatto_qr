@@ -20,7 +20,7 @@ class LotteryController extends Controller
         $brand = Brand::where('name', $brand)->first();
         if ($brand){
             $currentDate = date('m/d/Y');
-            $lottery = Lottery::where('is_active', 1)->where('to_date', '>', $currentDate)->get()->reverse()->first();
+            $lottery = Lottery::where('is_active', 1)->where("brand_id", $brand->id)->where('to_date', '>', $currentDate)->get()->reverse()->first();
 
             if ($lottery)
             {

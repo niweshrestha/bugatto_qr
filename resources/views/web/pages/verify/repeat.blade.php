@@ -14,7 +14,7 @@
         .underlay-background {
             position: absolute;
             top: 0;
-            bottom: -450px;
+            bottom: -100%;
             left: 0;
             right: 0;
             z-index: -1;
@@ -191,7 +191,8 @@
 
         <div class="main-section">
             <div class="logo-holder">
-                <img src="{{ asset('web/assets/images/logo.webp') }}" alt="bugatti-logo">
+                <img src="{{asset($brand->logo_path)}}" class="img-holder" alt="brand-logo">
+                {{-- <img src="{{ asset('web/assets/images/logo.webp') }}" alt="bugatti-logo"> --}}
             </div>
             <div class="icon-holder">
                 <img src="{{ asset('web/assets/images/alert.png') }}" alt="Verified">
@@ -223,7 +224,7 @@
                     <div class="details">
                         <h4>Scan Results</h4>
                         <h5>The security code you have queried has been queried <span>{{ $code->scanned }} time(s)</span>, 
-                            first query <span>Beijing Time:{{ $information->currentTime }}(UTC+8), IP: {{ $information->ip }}, Location: {{ $information->cityName }}, {{ $information->countryName }} </span>, Please confirm. 
+                            first query <span>Miami Time: {{ $information->currentTime }}, IP: {{ $information->ip }}, Location: {{ $information->cityName }}, {{ $information->countryName }} </span>, Please confirm. 
                             Warning: if this time period is not my query, beware of counterfeiting!</h5>
                     </div>
                 </div>
@@ -236,7 +237,7 @@
                         <div class='update-section'>
                             <?php $totalCode = $code->informations->count(); ?>
                             @foreach ($code->informations->skip($totalCode - 3)->take(3) as $info)
-                            <p>Beijing Time: <span> {{ $info->currentTime }} </span> (UTC+8), IP: <span> {{ $info->ip }} </span>, Address: <span> {{ $info->cityName }}, {{ $info->countryName }}</span></p>
+                            <p>Miami Time: <span> {{ $info->currentTime }} </span>, IP: <span> {{ $info->ip }} </span>, Address: <span> {{ $info->cityName }}, {{ $info->countryName }}</span></p>
                             @endforeach
                         </div>
                     </div>

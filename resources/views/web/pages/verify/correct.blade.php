@@ -171,7 +171,8 @@
 
         <div class="main-section">
             <div class="logo-holder">
-                <img src="{{ asset('web/assets/images/logo.webp') }}" alt="bugatti-logo">
+                <img src="{{asset($brand->logo_path)}}" class="img-holder" alt="brand-logo">
+                {{-- <img src="{{ asset('web/assets/images/logo.webp') }}" alt="bugatti-logo"> --}}
             </div>
             <div class="icon-holder">
                 <img src="{{ asset('web/assets/images/verified.png') }}" alt="Verified">

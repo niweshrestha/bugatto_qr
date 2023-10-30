@@ -14,10 +14,10 @@ class CodesController extends Controller
 {
     public $error;
 
-    public function verify($security_no = Null)
+    public function verify($brand = Null, $security_no = Null)
     {
         // if no security no in parameter return view
-        if (!$security_no) {
+        if (!$brand || !$security_no ) {
             // return view('web.pages.verify.verify-product');
             abort('404');
         }
@@ -33,7 +33,7 @@ class CodesController extends Controller
         // $ip = '103.98.130.143';
         $ip = request()->ip(); // current request ip
         $currentUserInfo = Location::get($ip); // user location information
-        // date_default_timezone_set('America/New_York');
+        date_default_timezone_set('America/New_York');
         $currentTime = Carbon::now(); // according to set timezone
 
         try {
@@ -99,9 +99,9 @@ class CodesController extends Controller
         // if exist and scanned
         DB::beginTransaction();
         try {
-
             $getCode->scanned = $getCode->scanned + 1;
             $getCode->save();
+            
             DB::commit();
 
             return view('web.pages.verify.repeat', [

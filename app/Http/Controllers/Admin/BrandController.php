@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Rules\Slug;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -27,6 +28,7 @@ class BrandController extends Controller
         if ($request->isMethod('POST')) {
             $request->validate([
                 'name' => 'required|string|max:20',
+                'slug' => ['required', new Slug],
                 'description' => 'nullable|string|min:3',
                 'brand_logo' => 'required|file|mimes:png,jpg,jpeg',
                 'brand_cover' => 'nullable|file|mimes:png,jpg,jpeg',
@@ -52,6 +54,7 @@ class BrandController extends Controller
                 // create brand
                 $code = new Brand;
                 $code->name = $request->name;
+                $code->slug = $request->slug;
                 $code->logo_path = $logo_path ?? '';
                 $code->cover_path = $cover_path ?? '';
                 $code->description = $request->description;
@@ -75,8 +78,8 @@ class BrandController extends Controller
             $currentTime = time(); // time in sec
             $imageName = $name . '-' . $currentTime . '-' . $type . '.' . $file->getClientOriginalExtension(); // full image name
             $imgPath = 'brand'; // full path
-            $file->move(public_path($imgPath), $imageName);
-            return $imgPath . '/' . $imageName;
+            $file->move(storage_path("app/public/" . $imgPath), $imageName);
+            return 'storage/' .$imgPath . '/' . $imageName;
         } catch (\Exception $e) {
             $this->error = 'Ops! looks like we had some problem: ' . $e->getMessage();
             \Log::error($this->error);

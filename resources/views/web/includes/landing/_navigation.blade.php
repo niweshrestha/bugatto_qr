@@ -9,11 +9,11 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1"><a class="text-dark nav-link py-3 px-0 px-lg-3 rounded" href="#about">About</a></li>
-                @if($lottery)
+                {{-- @if($lottery)
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="text-dark nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Join Lottery</a>
                 </li>
-                @endif
+                @endif --}}
             </ul>
         </div>
     </div>

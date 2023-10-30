@@ -19,6 +19,17 @@
                         @enderror
                     </div>
                     <div class="form-group has-validation">
+                        <label for="slug">Validation Url</label>
+                        <div class="input-group">
+                            <span class="input-group-text">https://vapebugatti.com/</span>
+                            <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" placeholder="example" value="{{ old('slug') }}">
+                            <span class="input-group-text">/XXXXXXXX</span>
+                            @error('slug')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group has-validation">
                         <label for="brand_logo">Upload Brand Logo</label>
                         <input type="file" class="form-control @error('brand_logo') is-invalid @enderror" id="brand_logo" name="brand_logo" placeholder="Upload .png,.jpg,.jpeg file" value="{{ old('brand_logo') }}">
                         @error('brand_logo')

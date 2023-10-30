@@ -43,7 +43,7 @@ class LandingController extends Controller
         $lottery = Lottery::find($id);
         if(!$lottery)
         {
-            return redirect()->route('web.contact')->with('error-message', "Action denied! Invalid Action");
+            return redirect()->route('web.brand.lottery', $lottery->brand->name)->with('error-message', "Action denied! Invalid Action");
         }
 
         DB::beginTransaction();
@@ -56,12 +56,12 @@ class LandingController extends Controller
             $applicant->phone = $request->phone;
             $applicant->save();
             DB::commit();
-            return redirect()->route('web.contact')->with('success', "We will update you by email or text message about the outcome of the lottery. Good luck!.");
+            return redirect()->route('web.brand.lottery', $lottery->brand->name)->with('success', "We will update you by email or text message about the outcome of the lottery. Good luck!.");
         } catch (\Exception $e) {
             DB::rollback();
             $this->error = 'Ops! looks like we had some problem';
             // $this->error = $e->getMessage();
-            return redirect()->route('web.contact')->with('error-message', $this->error);
+            return redirect()->route('web.brand.lottery', $lottery->brand->name)->with('error-message', $this->error);
         }       
     }
 }

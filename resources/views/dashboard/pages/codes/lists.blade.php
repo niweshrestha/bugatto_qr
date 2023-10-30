@@ -175,7 +175,7 @@
                                             : 'Repeat Scanned') }}</label>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-gradient-danger btn-icon btn-sm viewdetails"
+                                    <button type="button" id="codeTable" class="btn btn-gradient-danger btn-icon btn-sm viewdetails"
                                         title="View Details" data-id='{{ $code->id }}'>
                                         <i class="mdi mdi-eye btn-icon-prepend"></i>
                                     </button>
@@ -199,9 +199,9 @@
 <script type='text/javascript'>
     $(document).ready(function(){
     
-        $('#codeTable').on('click','.viewdetails',function(){
+        $('#codeTable').on('click', '.viewdetails', function(){
+            
             var codeId = $(this).attr('data-id');
-    
             if(codeId > 0){
     
                 // AJAX request

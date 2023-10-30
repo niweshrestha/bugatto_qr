@@ -1,16 +1,19 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="title" content="Bugatti Vapor"   />
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>Bugatti @yield('title')</title>
-<link rel="icon" type="image/x-icon" href="{{asset('landing/assets/favicon.ico')}}" />
+<link rel="icon" type="image/x-icon" href="{{ asset('landing/assets/favicon.ico') }}" />
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-<link href="{{asset('landing/css/styles.css')}}" rel="stylesheet" />
-<link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+    type="text/css" />
+<link href="{{ asset('landing/css/styles.css') }}" rel="stylesheet" />
+<link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
 <style>
-    p, small {
+    p,
+    small {
         text-align: justify;
         font-size: 18px;
         display: block;
@@ -43,7 +46,7 @@
 
     footer {
         position: relative;
-        background-color: #1D1D1D!important;
+        background-color: #1D1D1D !important;
     }
 
     footer .container {
@@ -113,23 +116,28 @@
 
     @media only screen and (max-width: 768px) {
         .single-title {
-            font-size: 24px!important;
+            font-size: 24px !important;
         }
+
         .hero-part {
             flex-direction: column;
         }
+
         .hero-part h1 {
             display: none;
         }
-        .hero-part .form{
-            width: 100%!important;
+
+        .hero-part .form {
+            width: 100% !important;
         }
+
         .bg-image {
             clip-path: unset;
         }
+
         .no-lottert {
-            min-height: 300px!important;
-            padding-top: 105px!important;
+            min-height: 300px !important;
+            padding-top: 105px !important;
         }
     }
 </style>
@@ -149,7 +157,7 @@
         padding: 10px 15px;
         border: 1px solid #dee2e6;
     }
-    
+
     .lottert,
     .image {
         min-height: 100vh;
@@ -168,7 +176,7 @@
         background-image: url("{{ asset('landing/assets/img/bg-hero.jpg') }}");
         background-size: cover;
         background-position: center center;
-        clip-path: polygon(103% 0, 89% 50%, 99% 105%, 0 100%, 0 0);
+        /* clip-path: polygon(103% 0, 89% 50%, 99% 105%, 0 100%, 0 0); */
     }
 
     .bg-image-sm {
@@ -199,10 +207,9 @@
         margin-right: 10px;
     }
 
-    .img-holder > img {
+    .img-holder>img {
         width: 100%;
         height: auto;
         object-fit: contain;
     }
-
 </style>

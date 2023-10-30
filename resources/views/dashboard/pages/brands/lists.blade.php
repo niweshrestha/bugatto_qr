@@ -197,6 +197,7 @@
                                 <th> Logo </th>
                                 <th> Cover </th>
                                 <th> Name </th>
+                                <th> Slug(UURL) </th>
                                 <th> Status </th>
                                 <th> Action </th>
                             </tr>
@@ -222,6 +223,7 @@
                                     @endif
                                 </td>
                                 <td> {{$brand->name}} </td>
+                                <td> {{$brand->slug}} </td>
                                 <td>
                                     <label
                                         class="badge {{ ($brand->status) ? 'badge-gradient-success' : 'badge-gradient-danger' }}">{{

@@ -54,6 +54,7 @@ class BrandController extends Controller
                 // create brand
                 $code = new Brand;
                 $code->name = $request->name;
+                $code->slug = $request->slug;
                 $code->logo_path = $logo_path ?? '';
                 $code->cover_path = $cover_path ?? '';
                 $code->description = $request->description;

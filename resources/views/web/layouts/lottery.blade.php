@@ -3,9 +3,10 @@
 
 <head>
     @include('web.includes.landing._head')
+    @stack('extra-styles')
 </head>
 
-<body id="page-top">
+<body id="page-top" style="background-color: rgba(238, 238, 238, 0.8);">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-light text-uppercase fixed-top" id="mainNav">
         <div class="container">

@@ -85,7 +85,7 @@
                             <tr>
                                 <td> {{ $recent->id }} </td>
                                 <td class="img-holder">
-                                    <img src="{{asset('storage/'. $recent->code->qr_path)}}" class="me-2"
+                                    <img src="{{ asset('storage/'. $recent->code->qr_path) }}" class="me-2"
                                         alt="qr-code">
                                 </td>
                                 <td> {{ $recent->code->security_no }} </td>

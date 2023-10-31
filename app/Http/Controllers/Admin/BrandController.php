@@ -30,8 +30,8 @@ class BrandController extends Controller
                 'name' => 'required|string|max:20',
                 'slug' => ['required', new Slug],
                 'description' => 'nullable|string|min:3',
-                'brand_logo' => 'required|file|mimes:png,jpg,jpeg',
-                'brand_cover' => 'nullable|file|mimes:png,jpg,jpeg',
+                'brand_logo' => 'required|file|mimes:png,jpg,jpeg,webp',
+                'brand_cover' => 'nullable|file|mimes:png,jpg,jpeg,webp',
             ]);
 
             DB::beginTransaction();

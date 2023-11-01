@@ -224,8 +224,8 @@
                     <div class="details">
                         <h4>Scan Results</h4>
                         <h5>The security code you have queried has been queried <span>{{ $code->scanned }} time(s)</span>, 
-                            first query <span>Miami Time: {{ $information->currentTime }}, IP: {{ $information->ip }}, Location: {{ $information->cityName }}, {{ $information->countryName }} </span>, Please confirm. 
-                            Warning: if this time period is not my query, beware of counterfeiting!</h5>
+                            first query <span>Miami Time: {{ $information->currentTime }}, IP: {{ $information->ip }}, Location: {{ $information->cityName }}, {{ $information->countryName }} </span>, Please confirm. </h5>
+                        <h5>Warning: if this time period is not my query, beware of counterfeiting!</h5>
                     </div>
                 </div>
                 <div class="info-items">

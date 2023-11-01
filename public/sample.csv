@@ -1,4 +1,4 @@
-code,brand
-12345678,Bugatti
-15236478,NIke
-3659865823,Puma
+brand_id,code,brand
+1,12345678,Bugatti
+2,15236478,NIke
+3,3659865823,Puma

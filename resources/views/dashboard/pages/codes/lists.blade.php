@@ -99,10 +99,10 @@
                             class="btn btn-gradient-primary btn-icon-text btn-sm">
                             <i class="mdi mdi-plus btn-icon-prepend"></i> Add New Code
                         </a>
-                        <a href="{{ route('admin.code.generate') }}"
+                        {{-- <a href="{{ route('admin.code.generate') }}"
                             class="btn btn-gradient-primary btn-icon-text btn-sm">
                             <i class="mdi mdi-plus btn-icon-prepend"></i> Bulk Import
-                        </a>
+                        </a> --}}
                         <a href="{{ route('admin.code.export', ['brandId' => $brandId ?? null]) }}"
                             class="btn btn-gradient-danger btn-icon-text btn-sm">
                             <i class="mdi mdi-upload btn-icon-prepend"></i> Export Data

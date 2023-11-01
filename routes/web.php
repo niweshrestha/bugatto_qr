@@ -51,13 +51,14 @@ Route::match(['get', 'post'], 'login', [CustomAuthController::class, 'login'])->
 Route::group([
     'as' => 'web.'
 ], function() {
-    Route::controller(WebCodesController::class)->group(function() {
-        Route::get('/{brand?}/{security_no?}', 'verify')->name('verify.product');
-    });
+
     Route::controller(LandingController::class)->group(function() {
         Route::get('/', 'landing')->name('landing');
         // Route::view('/#contact', 'web/pages/front')->name('contact');
         Route::post('/lottery/{id}/join', 'joinLottery')->name('applicant.join');
+    });
+    Route::controller(WebCodesController::class)->group(function() {
+        Route::get('/{brand?}/{security_no?}', 'verify')->name('verify.product');
     });
     Route::controller(WebLotteryController::class)->group(function() {
         Route::get('/b/lottery/{name}', 'view')->name('brand.lottery');

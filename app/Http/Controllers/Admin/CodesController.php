@@ -110,7 +110,8 @@ class CodesController extends Controller
                 // multiple qr generate
                 for ($i = 0; $i < $count; $i++) {
                     $qrCountNo++;
-                    $securityNo = str_pad($qrCountNo, 8, '0', STR_PAD_LEFT); // generate security number
+                    // $securityNo = str_pad($qrCountNo, 8, '0', STR_PAD_LEFT); // generate security number
+                    $securityNo = $this->random_sn($qrCountNo, 8); // generate security number
                     $currentTime = time(); // time in sec
                     $imageName = 'qrcode-' . $currentTime . '-' . $securityNo . '.png'; // full image name
                     $imgPath = 'qrcode-' . $request->brand . '/' . $imageName; // full path
@@ -243,5 +244,17 @@ class CodesController extends Controller
         } else {
             return redirect()->route('code.generate.each')->with('errors', 'File not found.');
         }
+    }
+
+    public function random_sn($qrCountNo, $length) 
+    {
+        // Calculate the number of random digits to add
+        $randomDigitsLength = $length - strlen($qrCountNo);
+        // Generate a random string of numbers
+        $randomDigits = strval(mt_rand(pow(10, $randomDigitsLength - 1), pow(10, $randomDigitsLength) - 1));
+        // Pad the original string with the random numbers to the left
+        $result = $randomDigits . $qrCountNo;
+
+        return $result;
     }
 }

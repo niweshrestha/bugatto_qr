@@ -16,20 +16,20 @@ class LandingController extends Controller
 
     public function landing()
     {
-        abort(404);
-        $lottery = Lottery::where('is_active', 1)->first();
-        if($lottery)
-        {
-            $now = date("m/d/Y");
-            $toDate = Carbon::createFromFormat('m/d/Y', $lottery->to_date);
-            $date = Carbon::createFromFormat('m/d/Y', $now);
+        // $lottery = Lottery::where('is_active', 1)->first();
+        // if($lottery)
+        // {
+        //     $now = date("m/d/Y");
+        //     $toDate = Carbon::createFromFormat('m/d/Y', $lottery->to_date);
+        //     $date = Carbon::createFromFormat('m/d/Y', $now);
     
-            $lotteryEnds = $toDate->gt($date);
-            return view('web.pages.front', compact('lottery', 'lotteryEnds'));
-        } else {
-            $lotteryEnds = '';
-            return view('web.pages.front', compact('lottery', 'lotteryEnds'));
-        }
+        //     $lotteryEnds = $toDate->gt($date);
+        abort(404);
+        return view('web.pages.front');
+        // } else {
+        //     $lotteryEnds = '';
+        //     return view('web.pages.front', compact('lottery', 'lotteryEnds'));
+        // }
     }
 
     public function joinLottery(Request $request, $id)

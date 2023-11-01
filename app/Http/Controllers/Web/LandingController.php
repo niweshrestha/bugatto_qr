@@ -16,6 +16,7 @@ class LandingController extends Controller
 
     public function landing()
     {
+        abort(404);
         $lottery = Lottery::where('is_active', 1)->first();
         if($lottery)
         {

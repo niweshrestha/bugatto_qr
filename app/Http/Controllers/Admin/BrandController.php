@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Rules\Slug;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
@@ -28,8 +27,12 @@ class BrandController extends Controller
         if ($request->isMethod('POST')) {
             $request->validate([
                 'name' => 'required|string|max:20',
-                'slug' => ['required', new Slug],
+                // 'slug' => ['required', new Slug],
                 'description' => 'nullable|string|min:3',
+                'website' => 'required|string|min:3',
+                'email' => 'required|string|email',
+                'phone' => 'required|string|min:3',
+                'address' => 'required|string|min:3',
                 'brand_logo' => 'required|file|mimes:png,jpg,jpeg,webp',
                 'brand_cover' => 'nullable|file|mimes:png,jpg,jpeg,webp',
             ]);
@@ -54,9 +57,13 @@ class BrandController extends Controller
                 // create brand
                 $code = new Brand;
                 $code->name = $request->name;
-                $code->slug = $request->slug;
+                $code->slug = Str::slug($request->name, "-");
                 $code->logo_path = $logo_path ?? '';
                 $code->cover_path = $cover_path ?? '';
+                $code->email = $request->email;
+                $code->website = $request->website;
+                $code->phone = $request->phone;
+                $code->address = $request->address;
                 $code->description = $request->description;
                 $code->save(); // saving code
 

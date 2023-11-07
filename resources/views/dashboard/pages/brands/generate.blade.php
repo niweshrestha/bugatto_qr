@@ -12,13 +12,13 @@
                 <form class="forms-sample" action="{{ route('admin.brand.generate') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group has-validation">
-                        <label for="name">Name</label>
+                        <label for="name">Company Formal Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="i.e: Bugatti" value="{{ old('name') }}">
                         @error('name')
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                    <div class="form-group has-validation">
+                    {{-- <div class="form-group has-validation">
                         <label for="slug">Validation Url</label>
                         <div class="input-group">
                             <span class="input-group-text">https://adminbugatti.com/</span>
@@ -28,6 +28,34 @@
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
+                    </div> --}}
+                    <div class="form-group has-validation">
+                        <label for="website">Site Address</label>
+                        <input type="text" class="form-control @error('website') is-invalid @enderror" id="website" name="website" placeholder="www.example.com" value="{{ old('website') }}" pattern="*">
+                        @error('website')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group has-validation">
+                        <label for="email">Email Address</label>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="example@gmail.com" value="{{ old('email') }}">
+                        @error('email')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group has-validation">
+                        <label for="address">Office Address</label>
+                        <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" placeholder="New York, United States" value="{{ old('address') }}">
+                        @error('address')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group has-validation">
+                        <label for="phone">Office Phone Number</label>
+                        <input type="tel" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" placeholder="" value="{{ old('phone') }}">
+                        @error('phone')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="form-group has-validation">
                         <label for="brand_logo">Upload Brand Logo</label>
@@ -43,15 +71,15 @@
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                    <div class="form-group has-validation">
+                    {{-- <div class="form-group has-validation">
                         <label for="description">Brand Description (Optional)</label>
                         <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="5" placeholder="Type your brand description..."></textarea>
                         @error('description')
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
-                    </div>
+                    </div> --}}
                     <button type="submit" class="btn btn-gradient-primary me-2">Create Brand</button>
-                    <a href="{{ route('admin.brand.lists') }}" class="btn btn-gradient-danger">Show Brands List</a>
+                    {{-- <a href="{{ route('admin.brand.lists') }}" class="btn btn-gradient-danger">Show Brands List</a> --}}
                 </form>
             </div>
         </div>

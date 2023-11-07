@@ -52,6 +52,9 @@
         .logo-holder {
             margin: 60px auto 36px;
             height: auto;
+            align-items: center;
+            gap: 12px;
+            display: flex;
             width: 250px;
             overflow: hidden;
         }
@@ -63,7 +66,19 @@
             overflow: hidden;
         }
 
-        .logo-holder > img,
+        .logo-holder > img {
+            width: 30%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .logo-holder > h4 {
+            font-size: 20px;
+            line-height: 21px;
+            color: #333;
+            font-weight: 700;
+        }
+        
         .logo-holder-sm > img,
         .icon-holder > img,
         .icon-holder-sm > img,
@@ -192,8 +207,10 @@
         <div class="main-section">
             <div class="logo-holder">
                 <img src="{{asset($brand->logo_path)}}" class="img-holder" alt="brand-logo">
+                <h4>{{ $brand->name }}</h4>
                 {{-- <img src="{{ asset('web/assets/images/logo.webp') }}" alt="bugatti-logo"> --}}
             </div>
+            
             <div class="icon-holder">
                 <img src="{{ asset('web/assets/images/alert.png') }}" alt="Verified">
             </div>
@@ -206,7 +223,7 @@
                         <h4>The security code of the scanned QR is <span>{{ $code->security_no }}</span></h4>
                     </div>
                 </div>
-                <div class="info-items">
+                {{-- <div class="info-items">
                     <div class="icon-holder-sm">
                         <img src="{{ asset('web/assets/images/check.png') }}" alt="Verified">
                     </div>
@@ -216,19 +233,20 @@
                             <img src="{{ asset('web/assets/images/qr-code.png') }}" alt="Verified">
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="info-items">
                     <div class="icon-holder-sm">
                         <img src="{{ asset('web/assets/images/exclamation-mark.png') }}" alt="Verified">
                     </div>
                     <div class="details">
                         <h4>Scan Results</h4>
-                        <h5>The security code you have queried has been queried <span>{{ $code->scanned }} time(s)</span>, 
+                        <h5>The security code you have queried has been already queried.</h5> 
+                            {{-- <span>{{ $code->scanned }} time(s)</span>, 
                             first query <span>Miami Time: {{ $information->currentTime }}, IP: {{ $information->ip }}, Location: {{ $information->cityName }}, {{ $information->countryName }} </span>, Please confirm. </h5>
-                        <h5>Warning: if this time period is not my query, beware of counterfeiting!</h5>
+                        <h5>Warning: if this time period is not my query, beware of counterfeiting!</h5> --}}
                     </div>
                 </div>
-                <div class="info-items">
+                {{-- <div class="info-items">
                     <div class="icon-holder-sm">
                         <img src="{{ asset('web/assets/images/close.png') }}" alt="Verified">
                     </div>
@@ -241,40 +259,40 @@
                             @endforeach
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 
                 <div class="info-items">
                     <div class="icon-holder-sm">
-                        <img src="{{ asset('web/assets/images/check.png') }}" alt="Verified">
+                        {{-- <img src="{{ asset('web/assets/images/check.png') }}" alt="Verified"> --}}
                     </div>
                     <div class="details">
                         <h4>Coorporate Information</h4>
                         <div class="comp-info">
-                            <h4>ELITE GROUP YJ LLC</h4>
+                            <h4>{{ $brand->name }}</h4>
                         </div>
                         <div class="comp-info">
                             <div class="icon-holder-sm">
                                 <img src="{{ asset('web/assets/images/global.png') }}" alt="Verified">
                             </div>
-                            <p>www.bugatti-e.com</p>
+                            <p>{{ $brand->website }}</p>
                         </div>
-                        {{-- <div class="comp-info">
+                        <div class="comp-info">
                             <div class="icon-holder-sm">
                                 <img src="{{ asset('web/assets/images/phone-call.png') }}" alt="Verified">
                             </div>
-                            <p>(786) 713-86162</p>
-                        </div> --}}
+                            <p>{{ $brand->phone }}</p>
+                        </div>
                         <div class="comp-info">
                             <div class="icon-holder-sm">
                                 <img src="{{ asset('web/assets/images/email.png') }}" alt="Verified">
                             </div>
-                            <p>info@bugatti-e.com</p>
+                            <p>{{ $brand->email }}</p>
                         </div>
                         <div class="comp-info">
                             <div class="icon-holder-sm">
                                 <img src="{{ asset('web/assets/images/placeholder.png') }}" alt="Verified">
                             </div>
-                            <p>1301 Shotgun Road Sunrise FL 33326 USA</p>
+                            <p>{{ $brand->address }}</p>
                         </div>
                     </div>
                 </div>

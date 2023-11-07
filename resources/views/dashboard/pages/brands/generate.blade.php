@@ -21,7 +21,7 @@
                     <div class="form-group has-validation">
                         <label for="slug">Validation Url</label>
                         <div class="input-group">
-                            <span class="input-group-text">https://vapebugatti.com/</span>
+                            <span class="input-group-text">https://adminbugatti.com/</span>
                             <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" placeholder="example" value="{{ old('slug') }}">
                             <span class="input-group-text">/XXXXXXXX</span>
                             @error('slug')

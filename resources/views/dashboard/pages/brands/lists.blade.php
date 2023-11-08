@@ -170,6 +170,12 @@
     color: #4CAF50;
     transform: rotate(22deg);
     }
+
+    .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
 </style>
 @endpush
 
@@ -230,6 +236,10 @@
                                         ($brand->status) ? 'Active' : 'Inactive' }}</label>
                                 </td>
                                 <td>
+                                    <a href="{{ route('admin.brand.update', ['id' => $brand->id]) }}"
+                                        class="btn btn-gradient-warning btn-icon btn-sm" title="Edit Lottery"><i
+                                            class="mdi mdi-square-edit-outline"></i></a>
+
                                     <button type="button" class="btn btn-gradient-danger btn-icon btn-sm viewdetails"
                                         title="View Details" data-id='{{ $brand->id }}'>
                                         <i class="mdi mdi-eye btn-icon-prepend"></i>

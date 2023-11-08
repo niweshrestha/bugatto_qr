@@ -176,17 +176,20 @@ class CodesController extends Controller
         $url = $domain . '/vp';
 
         if (!$code->scanned) {
-            $inject1 = "<span class='badge badge-gradient-success'>Correct Scan: </span><p>The security code you have queried has not been scanned yet and the product is <span>genuine</span>.</p>";
-        } else {
-            $inject1 = "<span class='badge badge-gradient-danger'>Repeat Sacn: </span><p>The security code has been queried <span>" . $code->scanned . "time(s)</span>, 
-            first query <span> Miami Time: " . $information->currentTime . ", IP:" . $information->ip . " </span></p>";
+            $inject1 = "<span class='badge badge-gradient-success'></span><p>The security code you have queried has not been scanned yet and the product is <span>genuine</span>.</p>";
+        } else if ($code->scanned == 1) {
+            $inject1 = "<span class='badge badge-gradient-success'>Correct Sacn: </span><p>The security code has been queried <span>" . $code->scanned . " time</span>";
+        }else {
+            $inject1 = "<span class='badge badge-gradient-danger'>Repeat Scan: </span><p style='color: red;'>The security code has been queried <span>" . $code->scanned . " time(s)</span>";
         }
 
-        if ($informations) {
+        if (count($informations) > 0) {
             $inject2 = "<h4>Last Scans: </h4><div class='update-section'>";
-            foreach ($informations as $info) {
-                $inject2 .= "<p>Miami Time: <span>" . $info->currentTime . "</span>, IP: <span>" . $info->ip . "</span>, Address: <span>" . $info->cityName . ', ' . $info->countryName . "</span></p>";
+            for ($i=0; $i < count($informations); $i++) { 
+                $inject2 .= "<p><span style='color: red;'>Scan Number ".($i + 1)."</span>:<br>Server Time: <span>" . $informations[$i]->currentTime . "</span><br> Scanning info:<br> Address: <span>" . $informations[$i]->cityName . ', ' . $informations[$i]->countryName . "</span></p>";
             }
+            // foreach ($informations as $info) {
+            // }
             $inject2 .= "</div>";
         }
 

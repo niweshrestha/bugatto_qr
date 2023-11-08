@@ -11,47 +11,36 @@
             box-sizing: border-box;
             font-family: 'Montserrat', sans-serif;
         }
-        .underlay-background {
-            position: absolute;
-            top: 0;
-            bottom: -300px;
-            left: 0;
-            right: 0;
-            z-index: -1;
-            background-color: #37fab4;
-            opacity: 0.1;
-            background-image:  linear-gradient(30deg, #4573f7 12%, transparent 12.5%, transparent 87%, #4573f7 87.5%, #4573f7), linear-gradient(150deg, #4573f7 12%, transparent 12.5%, transparent 87%, #4573f7 87.5%, #4573f7), linear-gradient(30deg, #4573f7 12%, transparent 12.5%, transparent 87%, #4573f7 87.5%, #4573f7), linear-gradient(150deg, #4573f7 12%, transparent 12.5%, transparent 87%, #4573f7 87.5%, #4573f7), linear-gradient(60deg, #4573f777 25%, transparent 25.5%, transparent 75%, #4573f777 75%, #4573f777), linear-gradient(60deg, #4573f777 25%, transparent 25.5%, transparent 75%, #4573f777 75%, #4573f777);
-            background-size: 18px 32px;
-            background-position: 0 0, 0 0, 9px 16px, 9px 16px, 0 0, 9px 16px;
-        }
-        .top-header {
-            background: rgb(114,230,169);
-            background: radial-gradient(circle, rgba(114,230,169,1) 56%, rgba(53,188,158,1) 100%);
-            text-align: center;
-        }
 
-        .top-header > h4 {
-            display: inline-block;
-            color: #333;
-            font-weight: 700;
-            font-size: 18px;
-            line-height: 27px;
-            margin: 5px 0;
+        body {
+            background: #f4f4f4;
         }
 
         .main-section {
-            width: 90%;
+            width: 360px;
+            background: white;
             margin: 0 auto;
+            margin-top: 42px;
+            padding: 24px;
         }
 
         .information {
-            width: 320px;
-            margin: 45px auto 0;
+            width: 100%;
+        }
+
+        
+        .underline {
+            height: 1px;
+            background: #bfbfbf;
+            margin: 20px 0px;
         }
 
         .logo-holder {
-            margin: 60px auto 36px;
+            margin: 0px auto;
             height: auto;
+            align-items: center;
+            gap: 12px;
+            display: flex;
             width: 250px;
             overflow: hidden;
         }
@@ -63,7 +52,19 @@
             overflow: hidden;
         }
 
-        .logo-holder > img,
+        .logo-holder > img {
+            width: 30%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .logo-holder > h4 {
+            font-size: 20px;
+            line-height: 21px;
+            color: #333;
+            font-weight: 700;
+        }
+        
         .logo-holder-sm > img,
         .icon-holder > img,
         .icon-holder-sm > img,
@@ -129,31 +130,27 @@
             color: #17af56;
         }
 
+        .info-items {
+            display: flex;
+            margin-top: 8px;
+            flex-direction: column;
+            gap: 8px;
+        }
+
         .comp-info {
             display: flex;
-            justify-content: flex-start;
+            gap: 4px;
             align-items: center;
-            font-size: 12px;
-            line-height: 18px;
         }
 
-        .comp-info div {
-            flex-basis: 24px;
-            font-weight: 700;
+        .comp-info > img {
+            width: 20px;
+            height: auto;
+            object-fit: contain;
         }
 
-        .comp-info p {
-            flex-basis: calc(100% - 24px);
-            font-weight: 700;
-            margin-left: 10px;
-            margin-bottom: 0;
-        }
-        .comp-info > h4 {
-            font-size: 12px;
-            line-height: 18px;
-            font-weight: 800;
-            text-align: center;
-            text-indent: 32px;
+        .comp-info > p {
+            margin: 0px;
         }
         .register-btn {
             text-align: center;
@@ -164,81 +161,39 @@
 
 @section('content')
     <div class="wrapper">
-        <div class="underlay-background"></div>
-        <div class="top-header">
-            <h4>Correct Scan</h4>
-        </div>
-
         <div class="main-section">
             <div class="logo-holder">
-                <img src="{{asset($brand->logo_path)}}" class="img-holder" alt="brand-logo">
-                {{-- <img src="{{ asset('web/assets/images/logo.webp') }}" alt="bugatti-logo"> --}}
+                <img src="{{ asset($brand->logo_path) }}" class="img-holder" alt="brand-logo">
+                <h4>{{ $brand->name }}</h4>
             </div>
-            <div class="icon-holder">
-                <img src="{{ asset('web/assets/images/verified.png') }}" alt="Verified">
-            </div>
+            <div class="underline"></div>
             <div class="information">
+                <h4>Authentication test for product number: <span>{{ $code->security_no }}</span></h4>
                 <div class="info-items">
-                    <div class="icon-holder-sm">
-                        <img src="{{ asset('web/assets/images/check.png') }}" alt="Verified">
-                    </div>
-                    <div class="details">
-                        <h4>The security code of the scanned QR is <span>{{ $code->security_no }}</span></h4>
-                    </div>
-                </div>
-                <div class="info-items">
-                    <div class="icon-holder-sm">
-                        <img src="{{ asset('web/assets/images/check.png') }}" alt="Verified">
-                    </div>
-                    <div class="details">
-                        <h4>Scanned QR</h4>
-                        <div class="icon-holder-inside">
-                            <img src="{{ asset('web/assets/images/qr-code.png') }}" alt="Verified">
-                        </div>
-                    </div>
-                </div>
-                <div class="info-items">
-                    <div class="icon-holder-sm">
-                        <img src="{{ asset('web/assets/images/check.png') }}" alt="Verified">
-                    </div>
                     <div class="details">
                         <h4>Scan Results</h4>
                         <h5>The security code you have queried has been scanned <span>1st time</span> and the product is <span>genuine</span>.</h5>
                     </div>
                 </div>
                 <div class="info-items">
-                    <div class="icon-holder-sm">
-                        <img src="{{ asset('web/assets/images/check.png') }}" alt="Verified">
+                    <div class="comp-info">
+                        <h4>{{ $brand->name }}</h4>
                     </div>
-                    <div class="details">
-                        <h4>Coorporate Information</h4>
-                        <div class="comp-info">
-                            <h4>{{ $brand->name }}</h4>
-                        </div>
-                        <div class="comp-info">
-                            <div class="icon-holder-sm">
-                                <img src="{{ asset('web/assets/images/global.png') }}" alt="Verified">
-                            </div>
-                            <p>{{ $brand->website }}</p>
-                        </div>
-                        <div class="comp-info">
-                            <div class="icon-holder-sm">
-                                <img src="{{ asset('web/assets/images/phone-call.png') }}" alt="Verified">
-                            </div>
-                            <p>{{ $brand->phone }}</p>
-                        </div>
-                        <div class="comp-info">
-                            <div class="icon-holder-sm">
-                                <img src="{{ asset('web/assets/images/email.png') }}" alt="Verified">
-                            </div>
-                            <p>{{ $brand->email }}</p>
-                        </div>
-                        <div class="comp-info">
-                            <div class="icon-holder-sm">
-                                <img src="{{ asset('web/assets/images/placeholder.png') }}" alt="Verified">
-                            </div>
-                            <p>{{ $brand->address }}</p>
-                        </div>
+                    <div class="comp-info">
+                        <img src="{{ asset('web/assets/images/global.png') }}" alt="Verified">
+                        <p>{{ $brand->website }}</p>
+                    </div>
+                    <div class="comp-info">
+                        <img src="{{ asset('web/assets/images/phone-call.png') }}" alt="Verified">
+                        <p>{{ $brand->phone }}</p>
+                    </div>
+                    <div class="comp-info">
+                        <img src="{{ asset('web/assets/images/email.png') }}" alt="Verified">
+                        <p>{{ $brand->email }}</p>
+                    </div>
+                    <div class="comp-info">
+                        <img src="{{ asset('web/assets/images/placeholder.png') }}" alt="Verified">
+                        <p>{{ $brand->address }}</p>
                     </div>
                 </div>
 

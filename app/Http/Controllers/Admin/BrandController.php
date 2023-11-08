@@ -79,6 +79,67 @@ class BrandController extends Controller
         }
     }
 
+    public function update(Request $request, $id)
+    {
+        $brand = Brand::find($id);
+
+        if ($request->isMethod('get')) {
+            return view('dashboard.pages.brands.update', compact('brand'));
+        }
+
+        if ($request->isMethod('POST')) {
+            $request->validate([
+                'name' => 'required|string|max:20',
+                // 'slug' => ['required', new Slug],
+                'description' => 'nullable|string|min:3',
+                'website' => 'required|string|min:3',
+                'email' => 'required|string|email',
+                'phone' => 'required|string|min:3',
+                'address' => 'required|string|min:3',
+                'brand_logo' => 'nullable|file|mimes:png,jpg,jpeg,webp',
+                'brand_cover' => 'nullable|file|mimes:png,jpg,jpeg,webp',
+            ]);
+
+            DB::beginTransaction();
+            try {
+                // dd($request);
+                $logo_path = null;
+                $cover_path = null;
+                if ($request->hasFile('brand_logo'))
+                {
+                    $fileName = $request->file('brand_logo');
+                    $logo_path = $this->fileUpload($request->name, $fileName, 'logo');
+                    $brand->logo_path = $logo_path ?? '';
+                }
+
+                if ($request->hasFile('brand_cover'))
+                {
+                    $fileName = $request->file('brand_cover');
+                    $cover_path = $this->fileUpload($request->name, $fileName, 'cover');
+                    $brand->cover_path = $cover_path ?? '';
+                }
+                
+                $brand->name = $request->name;
+                $brand->slug = Str::slug($request->name, "-");
+                $brand->email = $request->email;
+                $brand->website = $request->website;
+                $brand->phone = $request->phone;
+                $brand->address = $request->address;
+                $brand->description = $request->description;
+                $brand->save(); // saving code
+
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                $this->error = 'Ops! looks like we had some problem';
+                $this->error = $e->getMessage();
+                return redirect()->route('admin.brand.generate')->with('error-message', $this->error);
+            }
+
+            return redirect()->route('admin.brand.lists')->with('success', 'Code has been generated successfully.');
+        }
+    }
+
     protected function fileUpload($name, $file, $type = null)
     {
         try {

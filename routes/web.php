@@ -23,6 +23,7 @@ Route::group([
     Route::controller(BrandController::class)->group(function() {
         Route::get('/brands/lists', 'lists')->name('brand.lists');
         Route::match(['get', 'post'], '/brands/create', 'create')->name('brand.generate');
+        Route::match(['get', 'post'], '/brands/update/{id}', 'update')->name('brand.update');
         Route::get('/view-brand/{brandId}', 'show')->name('brand.show');
     });
     Route::controller(CodesController::class)->group(function() {

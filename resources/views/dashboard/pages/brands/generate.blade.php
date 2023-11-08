@@ -64,13 +64,13 @@
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                    <div class="form-group has-validation">
+                    {{-- <div class="form-group has-validation">
                         <label for="brand_cover">Upload Brand Cover</label>
                         <input type="file" class="form-control @error('brand_cover') is-invalid @enderror" id="brand_cover" name="brand_cover" placeholder="Upload .png,.jpg,.jpeg file" value="{{ old('brand_cover') }}">
                         @error('brand_cover')
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
-                    </div>
+                    </div> --}}
                     {{-- <div class="form-group has-validation">
                         <label for="description">Brand Description (Optional)</label>
                         <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="5" placeholder="Type your brand description..."></textarea>

@@ -2,7 +2,7 @@
     <h3 class="page-title text-capitalize">
         <span class="page-title-icon bg-gradient-primary text-white me-2">
             <i class="mdi mdi-home"></i>
-        </span> {{ request()->segments()[count(request()->segments()) - 1] }}
+        </span> {{ (count(request()->segments()) > 0) ? request()->segments()[count(request()->segments()) - 1]: "" }}
     </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

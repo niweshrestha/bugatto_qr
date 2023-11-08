@@ -11,14 +11,14 @@ use App\Http\Controllers\Web\LandingController;
 use App\Http\Controllers\Web\LotteryController as WebLotteryController;
 use Illuminate\Support\Facades\Route;
 
-
+Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard')->middleware('auth');
 
 Route::group([
     'prefix' => '/admin-panel',
     'as' => 'admin.',
     'middleware' => ['auth']
 ], function() {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('signout', [DashboardController::class, 'signOut'])->name('signout');
     Route::controller(BrandController::class)->group(function() {
         Route::get('/brands/lists', 'lists')->name('brand.lists');
@@ -50,10 +50,9 @@ Route::match(['get', 'post'], 'login', [CustomAuthController::class, 'login'])->
 
 Route::group([
     'as' => 'web.'
-], function() {
-
+], function() {   
     Route::controller(LandingController::class)->group(function() {
-        Route::get('/', 'landing')->name('landing');
+        // Route::get('/', 'landing')->name('landing');
         // Route::view('/#contact', 'web/pages/front')->name('contact');
         Route::post('/lottery/{id}/join', 'joinLottery')->name('applicant.join');
     });

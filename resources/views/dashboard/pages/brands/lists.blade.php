@@ -195,7 +195,7 @@
                             <tr>
                                 <th> ID </th>
                                 <th> Logo </th>
-                                <th> Cover </th>
+                                {{-- <th> Cover </th> --}}
                                 <th> Name </th>
                                 <th> Slug(UURL) </th>
                                 <th> Status </th>
@@ -214,14 +214,14 @@
                                         alt="QR-Code">
                                     @endif
                                 </td>
-                                <td> 
+                                {{-- <td> 
                                     @if ($brand->cover_path)
                                     <img src="{{asset($brand->cover_path)}}" class="img-holder" alt="QR-Code">
                                     @else
                                     <img src="{{asset('dashboard/assets/images/no-qr.png')}}" class="img-holder"
                                         alt="QR-Code">
                                     @endif
-                                </td>
+                                </td> --}}
                                 <td> {{$brand->name}} </td>
                                 <td> {{$brand->slug}} </td>
                                 <td>

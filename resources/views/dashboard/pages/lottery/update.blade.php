@@ -8,7 +8,8 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Update New Lottery</h4>
-                <p class="card-description"> From here you can create new lottery. </p>
+                <br>
+                {{-- <p class="card-description"> From here you can create new lottery. </p> --}}
                 <form class="forms-sample" action="{{ route('admin.lottery.update', ['id' => $lottery->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group has-validation">
@@ -45,7 +46,7 @@
                         @enderror
                     </div>
                     <div class="form-group has-validation">
-                        <label>Select Lottery Date</label>
+                        <label>Select Lottery Date Range</label>
                         <input type="text" class="form-control @error('date') is-invalid @enderror" name="date" value="{{$lottery->from_date}} - {{ $lottery->to_date }}" />
                         @error('date')
                         <small id="date" class="text-danger">{{ $message }}</small>

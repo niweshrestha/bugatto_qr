@@ -44,7 +44,7 @@ class LotteryController extends Controller
         $request->validate([
             'fullname' => 'required|min:3',
             'email' => 'required|min:3|unique:applicants,email',
-            'phone' => 'required|min:3|unique:applicants,phone'
+            // 'phone' => 'required|min:3|unique:applicants,phone'
         ]);
 
         $id = Crypt::decrypt($id);
@@ -61,7 +61,7 @@ class LotteryController extends Controller
             $applicant->lottery_id = $id;
             $applicant->fullname = $request->fullname;
             $applicant->email = $request->email;
-            $applicant->phone = $request->phone;
+            // $applicant->phone = $request->phone;
             $applicant->save();
             DB::commit();
             return redirect()->route('web.contact')->with('success', "We will update you by email or text message about the outcome of the lottery. Good luck!.");

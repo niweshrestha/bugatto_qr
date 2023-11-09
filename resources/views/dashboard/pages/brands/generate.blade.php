@@ -8,7 +8,8 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Add New Brand</h4>
-                <p class="card-description"> From here you can add new brand. </p>
+                <br>
+                {{-- <p class="card-description"> From here you can add new brand. </p> --}}
                 <form class="forms-sample" action="{{ route('admin.brand.generate') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group has-validation">

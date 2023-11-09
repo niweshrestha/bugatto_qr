@@ -8,7 +8,8 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Update Brand</h4>
-                <p class="card-description"> Update your brand. </p>
+                <br>
+                {{-- <p class="card-description"> Update your brand. </p> --}}
                 <form class="forms-sample" action="{{ route('admin.brand.update', ['id' => $brand->id ]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group has-validation">

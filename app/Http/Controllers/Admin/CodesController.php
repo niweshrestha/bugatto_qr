@@ -26,6 +26,27 @@ class CodesController extends Controller
 {
     public $error;
 
+    public function scanned_lists(Request $request)
+    {
+        $brands = Brand::where('status', 1)->select('name', 'id')->get();
+        $brandId = null;
+
+        if ($request->isMethod('get')) {
+            $codes = Code::where("scanned", ">", 0)->orderBy('scanned', 'asc')->paginate(10)->fragment('codes');
+            return view('dashboard.pages.codes.scanned_lists', compact('codes', 'brands', 'brandId'));
+        }
+
+        if ($request->isMethod('POST')) {
+            $request->validate([
+                'brand' => 'required|integer'
+            ]);
+
+            $brandId = $request->brand;
+            $codes = Code::where('brand_id', $brandId)->orderBy('scanned', 'asc')->paginate(10)->fragment('codes');
+            return view('dashboard.pages.codes.scanned_lists', compact('codes', 'brands', 'brandId'));
+        }
+    }
+
     public function lists(Request $request)
     {
         $brands = Brand::where('status', 1)->select('name', 'id')->get();

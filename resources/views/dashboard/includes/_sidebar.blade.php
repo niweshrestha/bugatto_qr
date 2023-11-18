@@ -47,7 +47,7 @@
             </a>
             <div class="collapse" id="code">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.code.lists') }}">Show Lists</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.code.scanned.lists') }}">Show Lists</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('admin.code.generate.each') }}">Add New Code</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('admin.code.generate') }}">Bulk Import</a></li>
                 </ul>

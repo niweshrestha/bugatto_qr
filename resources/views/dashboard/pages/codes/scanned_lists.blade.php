@@ -95,12 +95,11 @@
                     <div class="card-header">
                         <ul class="nav nav-pills">
                             <li class="nav-item">
-                                <a class="nav-link text-secondary" href="{{ route('admin.code.scanned.lists') }}">Scanned QR
+                                <a class="nav-link active btn-gradient-primary" aria-current="page" href="#">Scanned QR
                                     Codes</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active btn-gradient-primary" aria-current="page" href="#">All QR
-                                    Codes</a>
+                                <a class="nav-link text-secondary" href="{{ route('admin.code.lists') }}">All QR Codes</a>
                             </li>
                         </ul>
                     </div>
@@ -108,7 +107,7 @@
 
                 <div class="card-body">
                     <div class="card-title-holder">
-                        <h4 class="card-title">All QR Codes</h4>
+                        <h4 class="card-title">Scanned QR Codes</h4>
                         <div>
                             @if (Helper::is_super_admin())
                                 <a href="{{ route('admin.code.generate.each') }}"
@@ -120,7 +119,6 @@
                                     <i class="mdi mdi-upload btn-icon-prepend"></i> Export Data
                                 </a>
                             @endif
-
                             {{-- <a href="{{ route('admin.code.generate') }}"
                             class="btn btn-gradient-primary btn-icon-text btn-sm">
                             <i class="mdi mdi-plus btn-icon-prepend"></i> Bulk Import
@@ -148,7 +146,7 @@
                                 All
                             @endif
                         </h4>
-                        <form method="post" action="{{ route('admin.code.lists') }}">
+                        <form method="post" action="{{ route('admin.code.scanned.lists') }}">
                             @csrf
                             <div class="form-items-group">
                                 <div class="form-group has-validation" style="margin-bottom: 0;">

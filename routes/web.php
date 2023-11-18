@@ -27,9 +27,10 @@ Route::group([
         Route::get('/view-brand/{brandId}', 'show')->name('brand.show');
     });
     Route::controller(CodesController::class)->group(function() {
-        Route::match(['get', 'post'], '/codes/lists', 'lists')->name('code.lists');
-        Route::match(['get', 'post'], '/codes/import', 'generate')->name('code.generate');
-        Route::match(['get', 'post'], '/codes/each', 'generateEach')->name('code.generate.each');
+        Route::match(['get', 'post'], '/codes/lists', 'lists')->name('code.lists')->middleware("isSuperAdmin");
+        Route::match(['get', 'post'], '/codes/scanned', 'scanned_lists')->name('code.scanned.lists');
+        Route::match(['get', 'post'], '/codes/import', 'generate')->name('code.generate')->middleware("isSuperAdmin");
+        Route::match(['get', 'post'], '/codes/each', 'generateEach')->name('code.generate.each')->middleware("isSuperAdmin");
         Route::get('/view-code/{codeId}', 'show')->name('code.show');
         Route::get('/download-zip/{brandId?}', 'zipDownload')->name('code.zip.download');
         Route::get('/download/{filename}', 'fileDownload')->name('file.download');

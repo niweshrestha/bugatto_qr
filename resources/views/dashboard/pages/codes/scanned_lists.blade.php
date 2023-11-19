@@ -161,6 +161,14 @@
                                         <small id="brand" class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
+                                <div class="form-group has-validation" style="margin-bottom: 0;">
+                                    <input type="number" name="scanned_times" placeholder="Scanned Times" min="1"
+                                        class="form-control @error('scanned_times') is-invalid @enderror"
+                                        style="padding: 0.94rem 1.375rem!important; width: 140px;">
+                                    @error('scanned_times')
+                                        <small id="scanned_times" class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
                                 <button type="submit" class="btn btn-gradient-danger btn-sm me-2">Apply Filters</button>
                             </div>
                         </form>

@@ -38,11 +38,23 @@ class CodesController extends Controller
 
         if ($request->isMethod('POST')) {
             $request->validate([
-                'brand' => 'required|integer'
+                'brand' => 'nullable|integer',
+                "scanned_times" => "nullable|integer"
             ]);
 
             $brandId = $request->brand;
-            $codes = Code::where('brand_id', $brandId)->orderBy('scanned', 'asc')->paginate(10)->fragment('codes');
+
+            $codesQuery = Code::where("scanned", ">", 0)->orderBy('scanned', 'asc');
+
+            if($request->brand) {
+                $codesQuery = $codesQuery->where("brand_id", $brandId);
+            }
+
+            if($request->scanned_times) {
+                $codesQuery = $codesQuery->where("scanned", $request->scanned_times);
+            }
+
+            $codes = $codesQuery->paginate(10)->fragment('codes');
             return view('dashboard.pages.codes.scanned_lists', compact('codes', 'brands', 'brandId'));
         }
     }
@@ -59,11 +71,23 @@ class CodesController extends Controller
 
         if ($request->isMethod('POST')) {
             $request->validate([
-                'brand' => 'required|integer'
+                'brand' => 'nullable|integer',
+                "scanned_times" => "nullable|integer"
             ]);
 
             $brandId = $request->brand;
-            $codes = Code::where('brand_id', $brandId)->orderBy('id', 'desc')->paginate(10)->fragment('codes');
+
+            $codesQuery = Code::where("scanned", ">=", 0)->orderBy('scanned', 'asc');
+
+            if($request->brand) {
+                $codesQuery = $codesQuery->where("brand_id", $brandId);
+            }
+
+            if($request->scanned_times) {
+                $codesQuery = $codesQuery->where("scanned", $request->scanned_times);
+            }
+
+            $codes = $codesQuery->paginate(10)->fragment('codes');
             return view('dashboard.pages.codes.lists', compact('codes', 'brands', 'brandId'));
         }
     }

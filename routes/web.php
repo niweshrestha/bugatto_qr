@@ -22,8 +22,8 @@ Route::group([
     Route::get('signout', [DashboardController::class, 'signOut'])->name('signout');
     Route::controller(BrandController::class)->group(function() {
         Route::get('/brands/lists', 'lists')->name('brand.lists');
-        Route::match(['get', 'post'], '/brands/create', 'create')->name('brand.generate');
-        Route::match(['get', 'post'], '/brands/update/{id}', 'update')->name('brand.update');
+        Route::match(['get', 'post'], '/brands/create', 'create')->name('brand.generate')->middleware("isSuperAdmin");
+        Route::match(['get', 'post'], '/brands/update/{id}', 'update')->name('brand.update')->middleware("isSuperAdmin");
         Route::get('/view-brand/{brandId}', 'show')->name('brand.show');
     });
     Route::controller(CodesController::class)->group(function() {
@@ -38,10 +38,10 @@ Route::group([
     });
     Route::controller(LotteryController::class)->group(function() {
         Route::get('/lotteries/lists', 'lists')->name('lottery.lists');
-        Route::match(['get', 'post'], '/lotteries/create', 'create')->name('lottery.create');
-        Route::match(['get', 'post'], '/lotteries/update/{id}', 'update')->name('lottery.update');
+        Route::match(['get', 'post'], '/lotteries/create', 'create')->name('lottery.create')->middleware("isSuperAdmin");
+        Route::match(['get', 'post'], '/lotteries/update/{id}', 'update')->name('lottery.update')->middleware("isSuperAdmin");
         Route::get('/change-status/{id}', 'changeStatus')->name('lottery.change.status');
-        Route::delete('/delete/{id}', 'delete')->name('lottery.delete');
+        Route::delete('/delete/{id}', 'delete')->name('lottery.delete')->middleware("isSuperAdmin");
         Route::get('/lottery/applicants/{id}', 'applicants')->name('lottery.applicants');
         Route::post('/lottery/applicants/winner/{id}', 'selectWinner')->name('lottery.applicant.winner');
         Route::post('/lottery/applicants/random-winner/{lotteryId}', 'randomWinner')->name('lottery.applicant.random.winner');

@@ -90,6 +90,7 @@ class BrandController extends Controller
         if ($request->isMethod('POST')) {
             $request->validate([
                 'name' => 'required|string|max:20',
+                'short_name' => 'nullable|string|max:20',
                 // 'slug' => ['required', new Slug],
                 'description' => 'nullable|string|min:3',
                 'website' => 'required|string|min:3',
@@ -120,7 +121,8 @@ class BrandController extends Controller
                 }
                 
                 $brand->name = $request->name;
-                $brand->slug = Str::slug($request->name, "-");
+                $brand->short_name = $request->short_name;
+                $brand->slug = Str::slug(($request->short_name) ? $request->short_name : $request->name, "-");
                 $brand->email = $request->email;
                 $brand->website = $request->website;
                 $brand->phone = $request->phone;

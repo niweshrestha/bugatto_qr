@@ -19,6 +19,13 @@
                         <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
+                    <div class="form-group has-validation">
+                        <label for="short_name">Short name</label>
+                        <input type="text" class="form-control @error('short_name') is-invalid @enderror" id="short_name" name="short_name" value="{{ old('short_name') }}">
+                        @error('short_name')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
                     {{-- <div class="form-group has-validation">
                         <label for="slug">Validation Url</label>
                         <div class="input-group">

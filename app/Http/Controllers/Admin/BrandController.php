@@ -95,8 +95,8 @@ class BrandController extends Controller
                 'description' => 'nullable|string|min:3',
                 'website' => 'required|string|min:3',
                 'email' => 'required|string|email',
-                'phone' => 'required|string|min:3',
-                'address' => 'required|string|min:3',
+                'phone' => 'nullable|string|min:3',
+                'address' => 'nullable|string|min:3',
                 'brand_logo' => 'nullable|file|mimes:png,jpg,jpeg,webp',
                 'brand_cover' => 'nullable|file|mimes:png,jpg,jpeg,webp',
             ]);

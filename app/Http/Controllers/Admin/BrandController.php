@@ -27,12 +27,13 @@ class BrandController extends Controller
         if ($request->isMethod('POST')) {
             $request->validate([
                 'name' => 'required|string|max:20',
+                'short_name' => 'nullable|string|max:20',
                 // 'slug' => ['required', new Slug],
                 'description' => 'nullable|string|min:3',
                 'website' => 'required|string|min:3',
                 'email' => 'required|string|email',
-                'phone' => 'required|string|min:3',
-                'address' => 'required|string|min:3',
+                'phone' => 'nullable|string|min:3',
+                'address' => 'nullable|string|min:3',
                 'brand_logo' => 'required|file|mimes:png,jpg,jpeg,webp',
                 'brand_cover' => 'nullable|file|mimes:png,jpg,jpeg,webp',
             ]);
@@ -57,7 +58,8 @@ class BrandController extends Controller
                 // create brand
                 $code = new Brand;
                 $code->name = $request->name;
-                $code->slug = Str::slug($request->name, "-");
+                $code->short_name = $request->short_name;
+                $code->slug = Str::slug(($request->short_name) ? $request->short_name : $request->name, "-");
                 $code->logo_path = $logo_path ?? '';
                 $code->cover_path = $cover_path ?? '';
                 $code->email = $request->email;

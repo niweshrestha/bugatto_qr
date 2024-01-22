@@ -15,6 +15,7 @@ class Code extends Model
         'qrs',
         'qr_path',
         'scanned',
+        'brand_id'
     ];
 
     public function informations()

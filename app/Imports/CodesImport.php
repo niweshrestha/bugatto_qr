@@ -25,7 +25,7 @@ class CodesImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         Validator::make($rows->toArray(), [
-             '*.code' => 'required|integer|max:8',
+             '*.code' => 'required|integer',
              '*.brand_id' => 'required|integer'
          ])->validate();
 

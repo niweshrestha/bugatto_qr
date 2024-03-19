@@ -146,7 +146,14 @@ class CodesController extends Controller
             DB::beginTransaction();
 
             // initial veriables
-            $qrCountNo = Code::get()->count(); // current no of qr in table
+            $currentCodeQuery = Code::where("brand_id", $brand->id); 
+            if($currentCodeQuery->exists()){
+                $qrCount = $currentCodeQuery->max("security_no");
+            }else{
+                $qrCount = 0;
+            }
+            // dd($qrCount);
+            // $qrCountNo = Code::get()->count(); // current no of qr in table
             $count = $request->number; // user define
             $domain = URL::to('/'); // generate url
             $url = $domain . '/' . $brand->slug;
@@ -154,12 +161,12 @@ class CodesController extends Controller
             try {
                 // multiple qr generate
                 for ($i = 0; $i < $count; $i++) {
-                    $qrCountNo++;
-                    // $securityNo = str_pad($qrCountNo, 8, '0', STR_PAD_LEFT); // generate security number
-                    $securityNo = $this->random_sn($qrCountNo, 8); // generate security number
+                    $qrCount++;
+                    $securityNo = str_pad($qrCount, 8, '0', STR_PAD_LEFT); // generate security number
+                    // $securityNo = $this->random_sn($qrCountNo, 8); // generate security number
                     $currentTime = time(); // time in sec
-                    $imageName = 'qrcode-' . $currentTime . '-' . $securityNo . '.png'; // full image name
-                    $imgPath = 'qrcode-' . $request->brand . '/' . $imageName; // full path
+                    $imageName =   $securityNo . '.png'; // full image name
+                    $imgPath = 'qrcodes-' . $brand->name . '/' . $imageName; // full path
                     // $qrCode = QrCode::format('png')->margin(2)->size(30.4)->eye('square')->style('square')->errorCorrection('M')->generate($url . '/' . $securityNo); // Generate QR
                     $options = new QROptions([
                         'imageBase64' => false,
@@ -183,7 +190,7 @@ class CodesController extends Controller
 
                     // dd(storage_path("public/" . $imgPath));
                     // Laravel can only display saved files
-                    $directoryPath = storage_path("app/public/" . 'qrcode-' . $request->brand);
+                    $directoryPath = storage_path("app/public/" . 'qrcodes-' . $brand->name);
                     File::isDirectory($directoryPath) or File::makeDirectory($directoryPath, 0777, true, true);
                     $img->writeImage(str_replace("\\", '/', storage_path("app/public/" . $imgPath)));
 
@@ -203,7 +210,7 @@ class CodesController extends Controller
                 DB::rollback();
                 $this->error = 'Ops! looks like we had some problem';
                 $this->error = $e->getMessage();
-                return redirect()->route('admin.code.generate')->with('error-message', $this->error);
+                return redirect()->route('admin.code.generate.each')->with('error-message', $this->error);
             }
 
             return redirect()->route('admin.code.lists')->with('success', 'Code has been generated successfully.');

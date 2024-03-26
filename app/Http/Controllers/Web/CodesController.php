@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Code;
 use App\Models\Information;
 use Carbon\Carbon;
@@ -23,7 +24,13 @@ class CodesController extends Controller
         }
 
         // if security no exist get the first data
-        $getCode = Code::where('security_no', $security_no)->first();
+        $brandObj = Brand::where('slug', $brand)->first();
+        
+        if (!$brandObj) {
+            abort(404);
+        }
+
+        $getCode = Code::where("brand_id", $brandObj->id)->where('security_no', $security_no)->first();
 
         // check if exist getCode
         if (!$getCode) {
@@ -86,7 +93,7 @@ class CodesController extends Controller
                 return view('web.pages.verify.correct', [
                     'code' => $getCode,
                     'information' => $getCode->informations->first(),
-                    'brand' => $getCode->brand
+                    'brand' => $brandObj
                 ]);
             } catch (\Exception $e) {
                 DB::rollback();
@@ -107,7 +114,7 @@ class CodesController extends Controller
             return view('web.pages.verify.repeat', [
                 'code' => $getCode,
                 'information' => $getCode->informations->first(),
-                'brand' => $getCode->brand
+                'brand' => $brandObj
             ]);
         } catch (\Exception $e) {
             DB::rollback();
